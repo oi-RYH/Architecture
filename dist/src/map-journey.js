@@ -28,8 +28,9 @@ function overviewTiles(){
 function fullPaper(viewport,sheet,overview){
  const bounds=viewport.getBoundingClientRect(),map=sheet.getBoundingClientRect();
  const paper=document.createElement('div');paper.className='journey-paper';paper.dataset.coverage='national';
- // Fixed logical dimensions avoid allocating a giant, zoomed national canvas.
- const width=1000,height=width*30000/17837;
+ // Preserve the live map's CSS pixel density instead of rasterizing a small
+ // logical sheet and magnifying it. Images remain separately tiled; no giant canvas.
+ const width=map.width,height=map.height;
  Object.assign(paper.style,{width:`${width}px`,height:`${height}px`});
  const base=sheet.querySelector('.map-soft').cloneNode();base.className='journey-paper-base';paper.append(base);
  function addTile(image,left,top,w,h){
@@ -51,26 +52,18 @@ function fullPaper(viewport,sheet,overview){
  return {paper,width,height,mx,my,scale:map.width/width,x:map.left+map.width*mx,y:map.top+map.height*my};
 }
 
-function projectedBounds(model,scale,angle,perspective){
- const rad=angle*Math.PI/180,points=[];
- for(const u of [0,1])for(const v of [0,1]){
-  const dx=(u-model.mx)*model.width*scale,dy=(v-model.my)*model.height*scale;
-  const denominator=perspective-dy*Math.sin(rad);
-  if(denominator<=perspective*.08)return null;
-  const k=perspective/denominator;points.push({x:dx*k,y:dy*Math.cos(rad)*k});
- }
- return {left:Math.min(...points.map(p=>p.x)),right:Math.max(...points.map(p=>p.x)),top:Math.min(...points.map(p=>p.y)),bottom:Math.max(...points.map(p=>p.y))};
-}
-
-function nationalPose(model,angle){
- const perspective=Math.max(2400,innerHeight*3.5);let low=0,high=8;
- for(let i=0;i<32;i++){const mid=(low+high)/2,b=projectedBounds(model,mid,angle,perspective);if(b&&b.right-b.left<innerWidth*.94&&b.bottom-b.top<innerHeight*.66)low=mid;else high=mid;}
- const b=projectedBounds(model,low,angle,perspective);
- return {scale:low,x:innerWidth/2-(b.left+b.right)/2,y:innerHeight*.61-(b.top+b.bottom)/2,angle,perspective};
+function groundPose(model,t){
+ // Retain the focused map scale. The full map is the ground extending beyond
+ // the viewport, not an overview that needs to fit inside it. Keep the nearest
+ // map edge in front of the perspective eye to avoid projection clipping.
+ const perspective=Math.max(2400,model.height*model.scale*(1-model.my)*1.35);
+ return {scale:model.scale,x:model.x+(innerWidth/2-model.x)*t,y:model.y+(innerHeight*.56-model.y)*t,angle:74*t,perspective};
 }
 
 function positionPaper(model,pose){
  model.paper.style.transform=`translate3d(${pose.x-model.mx*model.width}px,${pose.y-model.my*model.height}px,0) perspective(${pose.perspective}px) rotateX(${pose.angle}deg) scale(${pose.scale})`;
+ model.paper.dataset.cameraScale=String(pose.scale);
+ model.paper.dataset.cameraTilt=String(pose.angle);
 }
 
 export function createJourney({reduced=false}={}){
@@ -109,16 +102,11 @@ export function createJourney({reduced=false}={}){
    const oldMain=document.querySelector('body>main');oldMain.inert=true;
    document.body.classList.add('journey-descending');
    back.focus({preventScroll:true});
-   // Pull back while lowering the camera; fit all four projected national corners.
-   // Zooming a viewport snapshot here would discard every other sheet of the map.
-   await animateJourney(reduced?0:3100,t=>{
-    const destination=nationalPose(model,64);
-    positionPaper(model,{scale:Math.exp(Math.log(model.scale)*(1-t)+Math.log(destination.scale)*t),x:model.x+(destination.x-model.x)*t,y:model.y+(destination.y-model.y)*t,angle:64*t,perspective:destination.perspective});
-   });
+   // Lower the viewpoint without pulling back. Neighbouring map tiles now
+   // remain present as the view opens up beyond the original screen crop.
+   await animateJourney(reduced?0:2600,t=>positionPaper(model,groundPose(model,t)));
    if(failed)return;
-   stage.dataset.phase='national';
-   const refit=()=>positionPaper(model,nationalPose(model,64));addEventListener('resize',refit);
-   await animateJourney(reduced?0:900,()=>{});
+   const refit=()=>positionPaper(model,groundPose(model,1));addEventListener('resize',refit);
    stage.dataset.phase=ready?'arriving':'waiting';
    if(!await prepared){removeEventListener('resize',refit);return;}
    removeEventListener('resize',refit);
@@ -127,7 +115,7 @@ export function createJourney({reduced=false}={}){
    frame.classList.add('is-visible');stage.classList.add('is-arriving');
    await animateJourney(reduced?0:2200,t=>{
     stage.style.opacity=String(1-t);
-    positionPaper(model,nationalPose(model,64+t*4));
+    positionPaper(model,groundPose(model,1));
    });
    if(failed){stage.style.opacity='1';stage.classList.remove('is-arriving');return;}
    clearTimeout(timeout);removeEventListener('message',onMessage);stage.remove();
