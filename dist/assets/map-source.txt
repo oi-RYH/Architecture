@@ -1,0 +1,17 @@
+Asset: daedongyeojido-full-1280.jpg
+Dimensions: 1280 x 2153 pixels
+Creator: Kim Jeong-ho
+Date: 1861
+Work: Daedongyeojido (Great Map of the East)
+Holding institution reported by Commons: Kyujanggak Institute for Korean Studies, Seoul National University
+Source page: https://commons.wikimedia.org/wiki/File:Daedongyeojido-full.jpg
+Download: https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Daedongyeojido-full.jpg/1280px-Daedongyeojido-full.jpg
+Rights as declared by source: Public domain (PD-Art), Public Domain Mark 1.0
+Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
+Suggested credit: 김정호, 《대동여지도》 (1861) · 규장각한국학연구원 소장본 · Wikimedia Commons · Public domain
+Verified 2026-10-06. Actual map scan, visually inspected. No generative processing applied.
+
+High-resolution edition (2026-10-06):
+Original: 17837 × 30000 pixels, JPEG, 103889511 bytes.
+Full original source: https://commons.wikimedia.org/wiki/Special:Redirect/file/Daedongyeojido-full.jpg
+Displayed through a five-level AVIF tile pyramid; original pixel dimensions retained at highest level. Small JPEG retained for initial display and fallback only.

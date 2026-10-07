@@ -1,0 +1,1 @@
+{"name":"geunjeongjeon-explorer","private":true,"type":"module","scripts":{"start":"python3 -m http.server 4173 --directory dist","check":"node --check dist/src/main.js && node --check dist/src/model-loader.js && node --check dist/src/procedural.js && node --check dist/src/layers.js"}}

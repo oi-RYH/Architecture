@@ -1,0 +1,10 @@
+.DS_Store
+._*
+node_modules/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+originals/**/*.fbx
+originals/**/*.FBX

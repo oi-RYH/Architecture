@@ -1,0 +1,73 @@
+{
+  "provider": "국가유산청",
+  "title": "경복궁 근정전",
+  "productionYear": 2023,
+  "license": "공공누리 제1유형 — 출처표시",
+  "sourceUrl": "https://digital.khs.go.kr/heritage/catalogDetail.do?order=1&index=1&id=13928228083859100002&type=1",
+  "sourceMeshObjects": 2845,
+  "importedMaterials": 118,
+  "uniqueColorMaps": 109,
+  "layerMeshObjects": {
+    "base": 760,
+    "walls": 745,
+    "frame": 239,
+    "brackets": 1021,
+    "roof": 80
+  },
+  "geometryBytes": 130989430,
+  "realWorldMemberCountsVerified": false,
+  "geometrySimplified": {
+    "fast": true,
+    "detail": false
+  },
+  "positionQuantizationBits": 16,
+  "note": "Default fast mode simplifies geometry and batches members by layer/material. Detail mode preserves the previous web geometry. Mesh counts are not physical member counts; measurement validation remains incomplete.",
+  "webProfiles": {
+    "baseline": {
+      "modelBytes": 232702498,
+      "triangles": 14319769,
+      "meshDrawCalls": 3461
+    },
+    "fast": {
+      "modelBytes": 25951608,
+      "triangles": 1717775,
+      "meshDrawCalls": 121,
+      "colorTextureMaxSize": 512,
+      "surfaceTextureMaxSize": 256,
+      "modelRequests": 1
+    },
+    "detail": "Original web geometry is loaded only on request; color textures max 2048px, WebP quality 92. Download originals remain unchanged."
+  },
+  "runtimeLOD": {
+    "mode": "automatic-per-architectural-layer",
+    "preload": "Both representations, textures, shaders and geometry buffers before interaction",
+    "enterDetailDistance": 6,
+    "leaveDetailDistance": 8,
+    "distanceUnits": "normalized world units to layer bounding box",
+    "networkDuringLODSwitch": false
+  },
+  "gpuTextureCompression": {
+    "staticBytes": 268072392,
+    "fastGLBBytes": 33549644,
+    "detailTextureBytes": 95596981,
+    "geometryModified": false,
+    "textureResolutionsModified": false,
+    "baseColorAndORM": "ETC1S qlevel 255 clevel 2",
+    "normalMaps": "UASTC quality 3, lossless Zstd 18, no RDO",
+    "mipmaps": true,
+    "colorException": {
+      "texture": "t_gjj_2f_rafter01_bc",
+      "encoder": "UASTC quality 3, RDO lambda 0.5, Zstd 18"
+    },
+    "validation": {
+      "geometryByteIdentical": true,
+      "all654TextureDimensionsUnchanged": true
+    },
+    "browserGPUTexturePayloadBytes": 736642160,
+    "browserGPUFormats": [
+      "BC7",
+      "ASTC 4x4"
+    ],
+    "baselineRGBA8MipEstimateGiB": 2.72
+  }
+}
