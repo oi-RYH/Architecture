@@ -11,3 +11,13 @@
 .layer{padding-top:10px;padding-bottom:10px}.aside-heading>p{line-height:1.7}.concept-note{font-size:13px}
 .back-map{margin-left:auto;margin-right:28px;font-size:14px;color:#d7b175;text-underline-offset:5px}.canvas-hint{width:auto;left:50%;transform:translateX(-50%);white-space:nowrap;background:#10181dd9;padding:7px 15px;border-radius:3px}@media(max-width:680px){.back-map{font-size:13px;margin-right:0}.brand span{display:none}.canvas-hint{width:95%;white-space:normal}.intro{padding:12px;background:#10181dbb;border-radius:3px}.view-label{top:174px}}
 .intro{padding:12px;background:#10181dbb;border-radius:3px}.view-label{background:#10181dcc;padding:5px 8px;border-radius:3px}
+
+/* The map owns the entrance until the GPU is ready; then the real camera settles. */
+.journey-embedded header,.journey-embedded aside,.journey-embedded footer,.journey-embedded .intro,.journey-embedded .view-label,.journey-embedded .view-tools,.journey-embedded .canvas-hint{opacity:0;transition:opacity 1.2s}
+.journey-embedded.journey-arrived header,.journey-embedded.journey-arrived aside,.journey-embedded.journey-arrived footer,.journey-embedded.journey-arrived .intro,.journey-embedded.journey-arrived .view-label,.journey-embedded.journey-arrived .view-tools,.journey-embedded.journey-arrived .canvas-hint{opacity:1}
+#loading-screen{overflow:hidden;background:#eae3d3 url('./assets/hanji.jpg') center/650px;perspective:1000px}
+#loading-screen::before{content:"";position:absolute;inset:-30%;background:url('./assets/daedongyeojido.jpg') 42% 56.55%/300% auto;opacity:.3;transform:rotateX(68deg) scale(1.8);transform-origin:center}
+#loading-screen::after{content:"漢陽 · 景福宮\A 근정전";white-space:pre;position:absolute;left:8%;top:15%;font:32px/1.8 serif;letter-spacing:.15em;color:#453e30}
+#loading-screen:not(.load-failed) #loading{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);padding:0;min-width:0}
+#loading-screen.load-failed::after{display:none}
+@media(prefers-reduced-motion:reduce){.journey-embedded *{transition:none!important}}

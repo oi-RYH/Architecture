@@ -4,7 +4,7 @@ export async function createMapTiles(viewport,sheet){
  const manifest=await response.json(),soft=document.createElement('div');
  soft.className='tile-plane tile-soft';soft.setAttribute('aria-hidden','true');
  sheet.insertBefore(soft,sheet.lastElementChild);
- const cache=new Map();let scheduled=false,generation=0,currentKeys='',retryTimer,retries=0;
+ const cache=new Map();let scheduled=false,generation=0,currentKeys='',retryTimer,retries=0,disposed=false;
  function fetchTile(key){
    if(cache.has(key))return cache.get(key);
    const promise=new Promise((resolve,reject)=>{
@@ -22,6 +22,7 @@ export async function createMapTiles(viewport,sheet){
  }
  function fallback(){sheet.classList.remove('tiles-ready');soft.hidden=true;}
  async function draw(){
+   if(disposed)return;
    scheduled=false;const ticket=++generation,r=sheet.getBoundingClientRect(),v=viewport.getBoundingClientRect(),ratio=Math.min(devicePixelRatio||1,2);
    if(!r.width||!r.height){fallback();return;}
    const need=Math.max(2230,r.width*ratio*1.15);
@@ -55,9 +56,14 @@ export async function createMapTiles(viewport,sheet){
    viewport.dataset.mapLevel=String(level);viewport.dataset.mapSource=`${size.width}×${size.height}`;
    viewport.dataset.visibleTiles=String(keys.length);viewport.dataset.mapLoad='ready';
  }
- function queue(){generation++;if(!scheduled){scheduled=true;requestAnimationFrame(()=>draw().catch(()=>{fallback();viewport.dataset.mapLoad='fallback';}));}}
+ function queue(){if(disposed)return;generation++;if(!scheduled){scheduled=true;requestAnimationFrame(()=>draw().catch(()=>{fallback();viewport.dataset.mapLoad='fallback';}));}}
  function update(){clearTimeout(retryTimer);retries=0;queue();}
- new ResizeObserver(update).observe(viewport);
+ const observer=new ResizeObserver(update);observer.observe(viewport);
  addEventListener('online',update);addEventListener('pageshow',update);
- return {nativeWidth:manifest.width,update};
+ function settle(timeout=1200){
+  const started=performance.now();
+  return new Promise(resolve=>{function check(){if(viewport.dataset.mapLoad==='ready'||performance.now()-started>=timeout)resolve();else setTimeout(check,50);}check();});
+ }
+ function dispose(){disposed=true;generation++;clearTimeout(retryTimer);observer.disconnect();removeEventListener('online',update);removeEventListener('pageshow',update);cache.clear();soft.replaceChildren();}
+ return {nativeWidth:manifest.width,update,settle,dispose};
 }

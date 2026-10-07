@@ -30,6 +30,6 @@ export async function revealInk(viewport,sheet,point){
  const stain=Math.max(0,1-(elapsed-impact)/650);if(stain>0&&sample){const radius=Math.min(maxR*.8,8+Math.sqrt(Math.max(0,elapsed-impact))*1.3);ctx.save();ctx.beginPath();ctx.arc(cx*dpr,cy*dpr,maxR*dpr,0,Math.PI*2);ctx.clip();ctx.globalAlpha=stain*.85;ctx.globalCompositeOperation='darken';ctx.drawImage(inkAsset,(cx-radius)*dpr,(cy-radius)*dpr,radius*2*dpr,radius*2*dpr);ctx.restore();}
  }
  viewport.dataset.inkProgress=t.toFixed(2);
- if(elapsed<impact+spread+hold)requestAnimationFrame(frame);else{document.body.classList.add('ink-departing');setTimeout(resolve,350);}}
+ if(elapsed<impact+spread+hold)requestAnimationFrame(frame);else{resolve();}}
  requestAnimationFrame(frame);});
 }

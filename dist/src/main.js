@@ -5,6 +5,12 @@ import {loadDetailedArchitecture,warmArchitecture} from './model-preload.js?v=ar
 import {bindViewGestures} from './view-gestures.js';
 const $=id=>document.getElementById(id);const host=$('scene');let model,selected='roof',progress=0,target=0,renderer,controls,camera,dirty=true;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const journeyEmbedded=window.parent!==window && new URLSearchParams(location.search).has('journey');
+const notifyJourney=type=>{if(journeyEmbedded)parent.postMessage({type},location.origin);};
+if(journeyEmbedded){
+ document.documentElement.classList.add('journey-embedded');
+ document.querySelectorAll('a[href="./"]').forEach(a=>{a.target='_top';});
+}
 $('layers').innerHTML=LAYERS.map((d,i)=>`<button class="layer" data-id="${d.id}" aria-pressed="false"><span class="number">0${i+1}</span><span class="swatch" style="--swatch:${d.color}"></span><span><strong>${d.name}</strong><small>${d.english}</small></span><span class="indicator"></span></button>`).join('');
 function select(id){const d=LAYERS.find(x=>x.id===id);if(!d)throw new Error('알 수 없는 레이어');selected=id;dirty=true;document.querySelectorAll('.layer').forEach(b=>{b.classList.toggle('active',b.dataset.id===id);b.setAttribute('aria-pressed',String(b.dataset.id===id));});$('detail-title').textContent=d.name;$('detail-number').textContent=String(LAYERS.indexOf(d)+1).padStart(2,'0');$('detail-description').textContent=d.description;$('detail-tag').textContent=d.tag;model?.layers.forEach(l=>l.group.traverse(o=>{if(o.isMesh)for(const m of [].concat(o.material))if(m.emissive){m.emissive.set(l.definition.id===id?'#8c642c':'#000000');m.emissiveIntensity=.035;}}));}
 function setProgress(v){target=T.MathUtils.clamp(v,0,1);}
@@ -29,6 +35,19 @@ async function init(){
  let zoom=1;function zoomBy(f){zoom=T.MathUtils.clamp(zoom*f,.18,1.5);dirty=true;}
  let resetMotion=null;
  const homeTarget=new T.Vector3(0,4.3,0),homeOrbit=new T.Spherical().setFromVector3(direction);
+ let arrivalMotion=null;
+ if(journeyEmbedded){
+  controls.enabled=false;
+  const arrivalOrbit=new T.Spherical(baseDistance*1.32,Math.PI*.465,homeOrbit.theta-.16);
+  camera.position.copy(homeTarget).add(new T.Vector3().setFromSpherical(arrivalOrbit));controls.update();
+  addEventListener('message',event=>{
+   if(event.origin!==location.origin||event.source!==parent||event.data?.type!=='architecture-arrive')return;
+   if(host.dataset.arrivalStarted)return;
+   host.dataset.arrivalStarted='true';
+   arrivalMotion={started:performance.now(),orbit:arrivalOrbit};
+   document.documentElement.classList.add('journey-arriving');
+  });
+ }
  function cancelReset(){if(!resetMotion)return;resetMotion=null;target=progress;controls.enabled=true;controls.enableDamping=true;}
  for(const event of ['pointerdown','wheel','gesturestart','keydown'])host.addEventListener(event,cancelReset,{capture:true,passive:true});
  $('reset').onclick=()=>{
@@ -46,7 +65,15 @@ async function init(){
  let previousProgress=0;let last=performance.now();
  function frame(now){
   const dt=Math.min((now-last)/1000,.05);last=now;
-  if(resetMotion){
+  if(arrivalMotion){
+   const t=reduced?1:T.MathUtils.clamp((now-arrivalMotion.started)/2400,0,1),ease=t*t*t*(t*(t*6-15)+10);
+   const from=arrivalMotion.orbit;
+   const orbit=new T.Spherical(T.MathUtils.lerp(from.radius,baseDistance,ease),T.MathUtils.lerp(from.phi,homeOrbit.phi,ease),T.MathUtils.lerp(from.theta,homeOrbit.theta,ease));
+   camera.position.copy(homeTarget).add(new T.Vector3().setFromSpherical(orbit));dirty=true;
+   if(t===1){arrivalMotion=null;controls.enabled=true;document.documentElement.classList.add('journey-arrived');}
+  }else if(journeyEmbedded&&!host.dataset.arrivalStarted){
+   // Keep the entrance pose until the map camera reaches the paper surface.
+  }else if(resetMotion){
    const r=resetMotion,t=r.duration?T.MathUtils.clamp((now-r.started)/r.duration,0,1):1;
    const ease=t*t*t*(t*(t*6-15)+10);
    progress=T.MathUtils.lerp(r.progress,0,ease);zoom=T.MathUtils.lerp(r.zoom,1,ease);
@@ -68,9 +95,11 @@ async function init(){
   if(dirty){renderer.render(scene,camera);if(host.dataset.triangles!==String(renderer.info.render.triangles)){host.dataset.drawCalls=String(renderer.info.render.calls);host.dataset.triangles=String(renderer.info.render.triangles);host.dataset.gpuGeometries=String(renderer.info.memory.geometries);host.dataset.gpuTextures=String(renderer.info.memory.textures);}dirty=false;}
   requestAnimationFrame(frame);
  }
+ renderer.render(scene,camera);
+ notifyJourney('architecture-ready');
  requestAnimationFrame(frame);
  // A structured counterpart to the same visible controls, where WebMCP is supported.
  if(document.modelContext?.registerTool){const lifecycle=new AbortController();try{await document.modelContext.registerTool({name:'set_architecture_view',description:'근정전의 레이어 선택과 분해 정도를 조절합니다.',inputSchema:{type:'object',properties:{layer:{type:'string',enum:LAYERS.map(l=>l.id)},progress:{type:'number',minimum:0,maximum:1}},additionalProperties:false},annotations:{readOnlyHint:false},async execute(input){if(!input||typeof input!=='object'||Object.keys(input).some(k=>!['layer','progress'].includes(k))||(input.layer!==undefined&&!LAYERS.some(l=>l.id===input.layer))||(input.progress!==undefined&&(!Number.isFinite(input.progress)||input.progress<0||input.progress>1)))throw new Error('유효하지 않은 보기 설정');if(input.layer!==undefined)select(input.layer);if(input.progress!==undefined)setProgress(input.progress);await new Promise(r=>requestAnimationFrame(r));return {layer:selected,progress:target};}},{signal:lifecycle.signal});addEventListener('pagehide',()=>lifecycle.abort(),{once:true});}catch(e){console.warn('Optional WebMCP unavailable',e);}}
- renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();$('loading').textContent='3D 화면 연결이 끊겼습니다. 페이지를 새로고침해 주세요.';$('loading').hidden=false;$('loading-screen').hidden=false;});
+ renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();notifyJourney('architecture-error');$('loading-screen').classList.add('load-failed');$('loading').textContent='3D 화면 연결이 끊겼습니다. 페이지를 새로고침해 주세요.';$('loading').hidden=false;$('loading-screen').hidden=false;});
 }
-init().catch(error=>{console.error(error);$('loading').textContent='3D 화면을 불러오지 못했습니다. WebGL 지원과 모델 파일을 확인한 후 새로고침해 주세요.';$('loading').hidden=false;$('loading-screen').hidden=false;});
+init().catch(error=>{console.error(error);notifyJourney('architecture-error');$('loading-screen').classList.add('load-failed');$('loading').textContent='3D 화면을 불러오지 못했습니다. WebGL 지원과 모델 파일을 확인한 후 새로고침해 주세요.';$('loading').hidden=false;$('loading-screen').hidden=false;});
