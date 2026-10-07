@@ -29,15 +29,23 @@ body.ink-departing main{opacity:1}
 
 /* From a single paper panel to the horizon, without discarding the prepared 3D scene. */
 .journey-focusing .map-copy,.journey-focusing .map-controls,.journey-focusing .map-hint{opacity:0;pointer-events:none;transition:opacity .7s}
-.journey-focusing #map-viewport{cursor:default}
+.journey-focusing{overflow:hidden}
+.journey-focusing>header,.journey-focusing>footer{opacity:0;pointer-events:none;transition:opacity .45s}
+.journey-focusing #map-viewport{position:fixed;inset:0;z-index:10;cursor:default;background:#eae3d3 url('./assets/hanji.jpg') center/650px}
+.journey-focusing #map-sheet{left:50%;top:50%}
 .journey-building{position:fixed;inset:0;width:100%;height:100%;border:0;z-index:40;opacity:0;pointer-events:none;background:#10181d}
 .journey-building.is-visible{opacity:1}
 .journey-complete .journey-building{pointer-events:auto}
 .journey-stage{position:fixed;inset:0;z-index:41;overflow:hidden;visibility:hidden;pointer-events:none;background:#eae3d3}
 .journey-stage.is-visible{visibility:visible;pointer-events:auto}
-.journey-ground{position:absolute;perspective:1100px}
-.journey-paper{width:100%;height:100%;display:block;transform-origin:50% 50%;will-change:transform;backface-visibility:hidden}
-.journey-stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(#eae3d300 35%,#eae3d318 68%,#eae3d3 100%)}
+.journey-ground{position:absolute;inset:0;overflow:visible}
+.journey-paper{position:absolute;left:0;top:0;background:#eae3d3;transform-style:flat;backface-visibility:hidden;box-shadow:0 3px 14px #53473326}
+.journey-paper img{position:absolute;width:100%;height:100%;pointer-events:none}
+.journey-paper-base,.journey-paper-tile img{opacity:.43}
+.journey-paper-tile{position:absolute;overflow:hidden;background:#eae3d3}
+.journey-paper-ink{position:absolute;pointer-events:none}
+.journey-paper-folds{position:absolute;inset:0;background:linear-gradient(90deg,#836b3924 1px,transparent 1px),linear-gradient(#836b3924 1px,transparent 1px);background-size:10% 100%,100% 4.54545%;pointer-events:none}
+.journey-stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(#eae3d300 85%,#eae3d312 100%)}
 .journey-caption{position:absolute;z-index:2;left:8vw;top:13vh;display:flex;flex-direction:column;color:#453e30;opacity:0;transform:translateY(12px);transition:opacity 1.4s .5s,transform 1.8s .5s}
 .is-visible .journey-caption{opacity:1;transform:none}
 .journey-caption span{font:12px serif;letter-spacing:.28em;color:#867459}

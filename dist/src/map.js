@@ -1,5 +1,5 @@
 import {revealInk} from './ink-reveal.js?v=journey-1';
-import {createJourney,animateJourney} from './map-journey.js?v=journey-1';
+import {createJourney,animateJourney} from './map-journey.js?v=journey-2';
 import {createMapTiles} from './map-tiles.js?v=journey-1';
 const viewport=document.querySelector('#map-viewport'),sheet=document.querySelector('#map-sheet');
 const backing=document.createElement('div');backing.className='map-paper';backing.setAttribute('aria-hidden','true');
@@ -23,7 +23,12 @@ async function enter(e){if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.p
 try{sessionStorage.setItem('map-view',JSON.stringify({scale,x,y}));}catch{}
 const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const journey=createJourney({reduced});
+// Promote the live map before focusing. Preserve its screen position across the
+// change from the right-hand viewport to a fixed, edge-to-edge viewport.
+const previousBounds=sheet.getBoundingClientRect();
 document.body.classList.add('journey-focusing');
+x=previousBounds.left+previousBounds.width/2-innerWidth/2;
+y=previousBounds.top+previousBounds.height/2-innerHeight/2;paint();
 document.querySelector('#journey-status').textContent='한양으로 이동합니다.';
 const start={scale,x,y},marker=document.querySelector('#palace-marker');
 // One panel in the existing 10 × 22 paper grid. Recompute on resize so the
