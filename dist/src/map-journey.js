@@ -3,7 +3,7 @@
 export function animateJourney(duration,draw){
  return new Promise(resolve=>{
   const started=performance.now();
-  function frame(now){const t=duration?Math.min(1,(now-started)/duration):1;draw(t*t*t*(t*(t*6-15)+10));if(t<1)requestAnimationFrame(frame);else resolve();}
+  function frame(now){const t=duration?Math.min(1,(now-started)/duration):1;draw(t*t*t*(t*(t*6-15)+10),t);if(t<1)requestAnimationFrame(frame);else resolve();}
   requestAnimationFrame(frame);
  });
 }
@@ -61,7 +61,7 @@ function groundPose(model,t){
 }
 
 function positionPaper(model,pose){
- model.paper.style.transform=`translate3d(${pose.x-model.mx*model.width}px,${pose.y-model.my*model.height}px,0) perspective(${pose.perspective}px) rotateX(${pose.angle}deg) scale(${pose.scale})`;
+ model.paper.style.transform=`translate3d(${pose.x-model.mx*model.width}px,${pose.y-model.my*model.height}px,0) perspective(${pose.perspective}px) rotateZ(${pose.bank||0}deg) rotateX(${pose.angle}deg) scale(${pose.scale})`;
  model.paper.dataset.cameraScale=String(pose.scale);
  model.paper.dataset.cameraTilt=String(pose.angle);
 }
@@ -77,15 +77,18 @@ export function createJourney({reduced=false}={}){
  const message=document.createElement('p'),retry=document.createElement('button');retry.textContent='다시 들어가기';
  error.append(message,retry);stage.append(caption,back,error);
  document.body.append(frame,stage);
- let ready=false,failed=false,resolveReady;
+ let ready=false,failed=false,resolveReady,resolveLanded,landingTimer;
  const prepared=new Promise(resolve=>{resolveReady=resolve;});
+ const landed=new Promise(resolve=>{resolveLanded=resolve;});
  function fail(text){
   failed=true;stage.classList.add('is-visible');stage.dataset.phase='error';error.hidden=false;message.textContent=text;
-  clearTimeout(timeout);resolveReady(false);
+  stage.style.opacity='1';stage.classList.remove('is-arriving','is-flying');
+  clearTimeout(timeout);clearTimeout(landingTimer);resolveReady(false);resolveLanded(false);
  }
  function onMessage(event){
   if(event.origin!==location.origin||event.source!==frame.contentWindow)return;
   if(event.data?.type==='architecture-ready'){ready=true;clearTimeout(timeout);resolveReady(true);}
+  if(event.data?.type==='architecture-landed'){clearTimeout(landingTimer);resolveLanded(true);}
   if(event.data?.type==='architecture-error')fail('근정전에 연결하지 못했습니다. 다시 시도하거나 지도로 돌아가 주세요.');
  }
  addEventListener('message',onMessage);
@@ -110,14 +113,29 @@ export function createJourney({reduced=false}={}){
    stage.dataset.phase=ready?'arriving':'waiting';
    if(!await prepared){removeEventListener('resize',refit);return;}
    removeEventListener('resize',refit);
-   stage.dataset.phase='arriving';
-   frame.contentWindow.postMessage({type:'architecture-arrive'},location.origin);
-   frame.classList.add('is-visible');stage.classList.add('is-arriving');
-   await animateJourney(reduced?0:2200,t=>{
-    stage.style.opacity=String(1-t);
-    positionPaper(model,groundPose(model,1));
+   stage.dataset.phase='flying';stage.classList.add('is-flying');
+   let arrivalStarted=false;
+   await animateJourney(reduced?0:2400,(_,t)=>{
+    if(failed)return;
+    // Accelerate over the paper toward the selected location. The destination
+    // remains the pivot; a slight bank adds lateral parallax without a spin.
+    const travel=t*t*(2-t),factor=Math.exp(Math.log(6.5)*travel),pose=groundPose(model,1);
+    const scene=frame.contentDocument?.querySelector('#scene')?.getBoundingClientRect();
+    const targetX=scene?scene.left+scene.width/2:innerWidth/2,targetY=scene?scene.top+scene.height/2:innerHeight/2;
+    positionPaper(model,{...pose,scale:pose.scale*factor,perspective:pose.perspective*factor,x:pose.x+(targetX-pose.x)*travel,y:pose.y+(targetY-pose.y)*travel,angle:74+4*travel,bank:1.6*Math.sin(Math.PI*t)});
+    stage.dataset.flightProgress=t.toFixed(3);
+    // Start the real 3D approach before revealing it, so motion continues
+    // through the handoff instead of restarting from a stationary scene.
+    if(t>=.58&&!arrivalStarted){
+     arrivalStarted=true;stage.dataset.phase='arriving';stage.classList.add('is-arriving');
+     frame.contentWindow.postMessage({type:'architecture-arrive'},location.origin);frame.classList.add('is-visible');
+     landingTimer=setTimeout(()=>fail('근정전 진입이 지연되고 있습니다. 다시 시도해 주세요.'),10000);
+    }
+    const blend=Math.max(0,Math.min(1,(t-.64)/.36));stage.style.opacity=String(1-blend*blend*(3-2*blend));
    });
    if(failed){stage.style.opacity='1';stage.classList.remove('is-arriving');return;}
+   stage.dataset.phase='landing';
+   if(!await landed)return;
    clearTimeout(timeout);removeEventListener('message',onMessage);stage.remove();
    document.body.classList.add('journey-complete');document.body.style.overflow='hidden';
    document.querySelector('body>header').inert=true;document.querySelector('body>footer').inert=true;

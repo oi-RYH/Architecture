@@ -1,5 +1,5 @@
 import {revealInk} from './ink-reveal.js?v=journey-1';
-import {createJourney,animateJourney} from './map-journey.js?v=journey-3';
+import {createJourney,animateJourney} from './map-journey.js?v=journey-4';
 import {createMapTiles} from './map-tiles.js?v=journey-1';
 const viewport=document.querySelector('#map-viewport'),sheet=document.querySelector('#map-sheet');
 const backing=document.createElement('div');backing.className='map-paper';backing.setAttribute('aria-hidden','true');

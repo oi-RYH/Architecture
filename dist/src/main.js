@@ -38,7 +38,7 @@ async function init(){
  let arrivalMotion=null;
  if(journeyEmbedded){
   controls.enabled=false;
-  const arrivalOrbit=new T.Spherical(baseDistance*1.32,Math.PI*.465,homeOrbit.theta-.16);
+  const arrivalOrbit=new T.Spherical(baseDistance*2.1,Math.PI*.465,homeOrbit.theta-.10);
   camera.position.copy(homeTarget).add(new T.Vector3().setFromSpherical(arrivalOrbit));controls.update();
   addEventListener('message',event=>{
    if(event.origin!==location.origin||event.source!==parent||event.data?.type!=='architecture-arrive')return;
@@ -66,11 +66,12 @@ async function init(){
  function frame(now){
   const dt=Math.min((now-last)/1000,.05);last=now;
   if(arrivalMotion){
-   const t=reduced?1:T.MathUtils.clamp((now-arrivalMotion.started)/2400,0,1),ease=t*t*t*(t*(t*6-15)+10);
+   const t=reduced?1:T.MathUtils.clamp((now-arrivalMotion.started)/2400,0,1),ease=1-(1-t)**3;
    const from=arrivalMotion.orbit;
    const orbit=new T.Spherical(T.MathUtils.lerp(from.radius,baseDistance,ease),T.MathUtils.lerp(from.phi,homeOrbit.phi,ease),T.MathUtils.lerp(from.theta,homeOrbit.theta,ease));
    camera.position.copy(homeTarget).add(new T.Vector3().setFromSpherical(orbit));dirty=true;
-   if(t===1){arrivalMotion=null;controls.enabled=true;document.documentElement.classList.add('journey-arrived');}
+   host.dataset.arrivalProgress=t.toFixed(3);host.dataset.arrivalDistance=orbit.radius.toFixed(3);
+   if(t===1){arrivalMotion=null;controls.enabled=true;document.documentElement.classList.add('journey-arrived');notifyJourney('architecture-landed');}
   }else if(journeyEmbedded&&!host.dataset.arrivalStarted){
    // Keep the entrance pose until the map camera reaches the paper surface.
   }else if(resetMotion){

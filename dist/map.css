@@ -55,5 +55,6 @@ body.ink-departing main{opacity:1}
 .journey-error{position:absolute;z-index:4;left:50%;top:55%;transform:translate(-50%,-50%);width:min(420px,85vw);padding:26px;background:#eee7d8f5;border:1px solid #836b3944;line-height:1.8}
 .journey-error button{background:#453e30;color:#eee7d8;border:0;padding:10px 18px}
 .is-arriving .journey-caption,.is-arriving .journey-back{opacity:0;transition:opacity .65s}
+.is-flying .journey-caption{opacity:0;transform:translateY(-14px);transition:opacity .45s,transform .65s}
 .journey-descending{overflow:hidden}
 @media(prefers-reduced-motion:reduce){.journey-caption,.journey-focusing .map-copy{transition:none}}

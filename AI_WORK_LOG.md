@@ -1,5 +1,28 @@
 # AI Work Log — Architecture
 
+## 2026-10-07 / 목표 장소를 향한 드론 비행 추가
+
+### Purpose / User Request
+
+- 낮은 시점 이후 실제로 장소를 향해 날아들어가는 느낌을 추가한다.
+
+### Work AI Actually Performed
+
+1. 낮은 시점과 모델 준비 완료 사이에 대기 조건을 유지하고, 이후 목표 장소 중심의 가속 접근 구간을 추가했다.
+2. 2400ms 동안 전진 효과 1→6.5배, 기울기 74→78도, 뱅크 최대 1.6도를 적용했다. 기존 하강 구간은 동일 배율로 유지했다.
+3. 지도 비행 58% 시점에 실제 모델 카메라를 출발시킨 뒤 64%부터 교차 페이드했다. 지도 목표점은 실제 3D 뷰포트 중심으로 이동시켜 좌우 점프를 줄였다.
+4. 실제 Three.js 카메라의 시작 거리를 기본 거리의 2.1배로 늘리고, 2400ms 동안 cubic ease-out으로 접근/감속하도록 수정했다. 모델의 위치/품질은 변경하지 않았다.
+5. `architecture-landed` 메시지를 추가해 실제 카메라 도착 후 전환을 완료한다. 실패와 10초 도착 시간 초과 때 오류 복귀를 제공한다. 동작 줄이기에서는 비행을 생략한다.
+6. 데스크톱 브라우저에서 flying 단계와 비행 진행률 0.729에서 지도 접근 배율 3.537을 확인했다. 390×844 모바일에서 실제 카메라 도착 진행률 1.000 및 조작 화면 진입, 오류 로그가 없는 것을 확인했다.
+
+### Technologies / Decisions / Files
+
+- CSS 원근 투영/배율로 지도 위 전진을 연출하고 Three.js 실제 카메라 거리 변화로 이어간다. 실제 드론 물리 시뮬레이션이나 3D 지형 비행은 아니다.
+- AI 선택: 가속 곡선 `t²(2−t)`, 접근 배율 6.5, 뱅크 1.6°, 58%/64% 연결 시점, 실제 카메라 ease-out. 사용자 요청에 맞춘 연출 값이며 조정 가능하다.
+- 변경: `dist/src/map-journey.js`, `dist/src/main.js`, `dist/map.css`, 버전 갱신을 위한 `dist/src/map.js`, `dist/index.html`, `dist/building.html`, 인계/작업 기록.
+- 실행: `node --check work/journey-edit/dist/src/map-journey.js`, `node --check work/journey-edit/dist/src/main.js`, `npm run check`, `node --check dist/src/map-journey.js`, `node --check dist/src/map.js`, `git diff --check`; 편집본을 권한 도구로 개인 프로젝트에 복사해 적용. 구문 검사와 diff 검사를 통과했다.
+- TECH 추가: Camera dolly and animation easing — 사용자가 “처음이라 설명이 필요해요”라고 답해 ⬜로 기록. Date Added / Last Confirmed 2026-10-07. CSS 지도 접근과 실제 카메라 전진의 차이, 가속/감속 목적을 설명했으며 이해 확인 전이므로 상태를 올리지 않았다. 기존 WORKFLOW의 Connect a map transition to a prepared 3D viewer에 연결한다.
+
 ## 2026-10-07 / 사용자 의도 정정: 배율을 유지한 낮은 시점
 
 ### Purpose / User Request
