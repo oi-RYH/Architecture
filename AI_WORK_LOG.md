@@ -143,3 +143,83 @@ git diff --check
 
 - TECH_KNOWLEDGE.md: Multi-resolution map tiles and full-map coverage; CSS 3D perspective and camera framing; WebGL scene preloading with iframe and postMessage.
 - WORKFLOW_KNOWLEDGE.md: Diagnose map transition coverage and verify camera framing; Connect a map transition to a prepared 3D viewer.
+
+## 2026-10-08 / 별도 진입 경험 — 가까이, 근정전
+
+### Purpose / User Request
+
+기존 지도·드론 비행 버전을 보존하고, 박물관의 정형화된 자동 영상과 다른 메인 페이지부터 근정전까지의 진입 경험을 제작. 로딩 멘트로 채우는 중간 화면 없이 관찰할 콘텐츠를 제공.
+
+### Work AI Actually Performed
+
+1. 전역 지식 저장소가 Git 저장소임을 확인하고 수정 중인 체크리스트가 있어 pull을 생략했다. 현지 AGENTS/TECH/WORKFLOW 기록을 읽었다. 프로젝트 저장소에서는 별도로 `git pull --ff-only`를 실행했고 Already up to date를 확인했다.
+2. frontend-design 스킬을 사용해 자동 비행 대신 사용자가 넘겨 읽는 에디토리얼 구성을 선택했다. 한지 계열 바탕, 먹색 글, 주홍 강조, 큰 명조 제목, 지도와 SVG 개념도를 구성했다.
+3. `/walk.html`에 독립된 첫 화면과 돌 → 나무 → 공포·처마 → 전체의 네 관찰 장면을 만들었다. 기존 index/building/map/main과 모델 파일은 수정하지 않았다.
+4. 기존 정밀 모델 로더, 인스턴싱, GPU 사전 준비를 재사용하는 별도 Three.js 표현 모듈을 만들었다. 카메라 위치와 바라보는 지점을 스크롤에 맞춰 연결하며, 준비 중에도 HTML 글과 SVG 구조 그림을 읽을 수 있게 했다.
+5. 마지막 장면에 7개 부위 해설, 회전, 구조 펼치기, 확대, 키보드 입력, 초기화와 이야기 복귀를 연결했다. 오류 시 재연결 안내와 개념도 유지, 동작 줄이기 분기를 구현했다.
+6. 브라우저에서 기본 창, 1280×900, 390×844 뷰포트를 확인했다. 처마의 카메라를 위에서 내려다보기에서 아래쪽 관찰로 수정했고, 모바일 앵커 위치의 소수점 오차 때문에 이전 챕터 이름이 남는 문제를 수정했다.
+7. 실제 모델 준비 완료, 7개 레이어, LOD 비활성, 압축 텍스처 사용을 DOM 진단값으로 확인했다. 키보드 구조 펼치기/회전/확대, Esc 복귀, 부위 선택과 해설, details 펼침, 앵커 이동, 가로 넘침 없음과 콘솔 오류 없음을 확인했다. 실제 휠 입력 뒤 구조 펼침 값 0.947과 R 초기화도 확인했다. 물리적 모바일 기기 테스트는 하지 않았으며 오류·동작 줄이기 분기는 코드로 검토했다.
+
+### Technologies / Tools Used
+
+| Technology or Tool | Reason for Use | Where Applied |
+|---|---|---|
+| HTML/CSS + inline SVG | 모델 준비와 독립적으로 읽고 볼 수 있는 콘텐츠, 반응형 구성 | walk.html, walk.css |
+| Scroll position + camera interpolation | 사용자가 관찰 속도와 방향을 결정하는 진입 경험 | walk.js, walk-scene.js |
+| Three.js / OrbitControls | 실제 정밀 모델 관찰과 직접 탐색 | walk-scene.js |
+| Existing GLTF/Draco/KTX2 loading and member instancing | 원래 형상·텍스처 품질과 기존 최적화 유지 | 기존 model-loader/model-preload/member-instancing 재사용 |
+| ResizeObserver / requestAnimationFrame | 레이아웃 변화 감지, 스크롤 갱신 통합, 필요한 프레임 렌더링 | 새 두 모듈 |
+| Codex browser tools / Node syntax checks | 실제 화면 및 입력 검증, 구문 검사 | localhost:4173 |
+
+### Commands Run
+
+주요 실행 명령. 샌드박스 밖 개인 프로젝트에는 작업 공간에서 apply_patch로 편집한 4개 신규 파일을 명시적 권한으로 복사했다.
+
+```text
+git status --short --branch
+git pull --ff-only
+cat AGENTS.md CONTINUE_HERE.md
+cat dist/src/model-preload.js
+cat dist/src/layers.js
+cat dist/models/provenance.json
+node --check work/journey-edit/dist/src/walk.js
+node --check work/journey-edit/dist/src/walk-scene.js
+python3 -m http.server 4173 --bind 127.0.0.1 --directory dist
+npm run check
+node --check dist/src/walk.js
+node --check dist/src/walk-scene.js
+git diff --check
+git status --short
+```
+
+### Important Settings / Options
+
+| Setting | Value | Reason and Effect |
+|---|---|---|
+| 새 진입 주소 | /walk.html | 기존 / 및 /building.html 유지 |
+| Camera FOV | 36° | 기존 표현과 유사한 원근감 |
+| Detailed model | 전체 7개 해설 레이어 / 자동 LOD 없음 | 형상·텍스처 품질을 낮추지 않음 |
+| Pixel ratio | 기존과 동일, desktop 최대1.5 / mobile 최대1 | 기존 렌더링 설정 유지 |
+| Scroll travel | 각 장의 42%까지 관찰, 이후 50% 구간에서 다음 시점으로 보간 | 관찰할 시간 확보 |
+| Reduced motion | 장 단위 전환, CSS transition 없음 | 연속 카메라 이동 생략 |
+| Model readiness | GPU 준비 완료 후 실제 모델 표시 | 시간만으로 완료를 추정하지 않음 |
+| Error recovery | 90초 연결 미완료 안내 및 새로고침 버튼 | 글과 그림은 계속 열람 가능 |
+
+### Files Created or Changed
+
+- Created: `dist/walk.html`, `dist/walk.css`, `dist/src/walk.js`, `dist/src/walk-scene.js`.
+- Updated: `CONTINUE_HERE.md`, `AI_WORK_LOG.md`.
+- Global checklist additions: Scroll-driven 3D narrative and progressive enhancement; Build an alternate entrance without replacing the existing route.
+
+### Technical Decisions AI Made on the User's Behalf
+
+- 자동 비행 대신 스크롤로 읽는 구성, 색·서체·관찰 순서·카메라 좌표는 AI가 선택했다. 사용자는 새 루트의 제작과 설계 재량을 허용했으나 개별 설정값은 지정하지 않았다.
+- 빈 화면이나 정형화된 로딩 문구를 숨기는 데 그치지 않고, 독립적인 건축 해설과 개념도를 먼저 제공하는 방식을 선택했다.
+- SVG는 실측도로 오해하지 않도록 명시했다. 카메라는 관찰용 연출이며 실제 보행 경로가 아니다. 해설은 기존 layers.js의 범위에 근거했고 새로운 역사 연도나 치수 주장은 추가하지 않았다.
+- 새로운 빌드 도구, 외부 폰트 서비스, 저품질 모델, 사이트 공개는 추가하지 않았다.
+
+### Knowledge Check / Related Checklist Items
+
+- TECH: Scroll-driven 3D narrative and progressive enhancement — ❓. 스크롤 연동과 먼저 읽을 수 있는 HTML/SVG 원리를 설명할 수 있는지 선택적 질문으로 확인 요청했다. 답변 없이 이해한 상태로 변경하지 않는다.
+- WORKFLOW: Build an alternate entrance without replacing the existing route — ❓.
+- 기존 Camera dolly and animation easing은 ⬜ 상태를 유지했다. 이번에 사용했다는 이유로 이해한 것으로 추정하지 않는다.
