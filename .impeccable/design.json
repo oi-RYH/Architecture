@@ -1,0 +1,657 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-08T16:42:28+00:00",
+  "title": "Design System: 결 (結)",
+  "extensions": {
+    "colorMeta": {
+      "juhong-seal": {
+        "role": "primary",
+        "displayName": "Juhong Seal Vermilion",
+        "canonical": "#b8432b",
+        "tonalRamp": [
+          "#3e170e",
+          "#6b2719",
+          "#993824",
+          "#c6482e",
+          "#d86f5a",
+          "#e49a8b",
+          "#f0c5bd",
+          "#faedea"
+        ]
+      },
+      "seal-paper": {
+        "role": "primary",
+        "displayName": "Seal Paper",
+        "canonical": "#f6e9d6",
+        "tonalRamp": [
+          "#3f2b0e",
+          "#6d4a18",
+          "#9b6a22",
+          "#c9892c",
+          "#daa558",
+          "#e5c08a",
+          "#f0dbbc",
+          "#faf4ea"
+        ]
+      },
+      "thread-deep": {
+        "role": "secondary",
+        "displayName": "Binding Thread, Deep",
+        "canonical": "#7a1d12",
+        "tonalRamp": [
+          "#43100a",
+          "#741b11",
+          "#a42718",
+          "#d5331f",
+          "#e55d4d",
+          "#ed8e83",
+          "#f5beb8",
+          "#fcebe9"
+        ]
+      },
+      "thread-bright": {
+        "role": "secondary",
+        "displayName": "Binding Thread, Bright",
+        "canonical": "#e2705d",
+        "tonalRamp": [
+          "#41130c",
+          "#702114",
+          "#a02f1d",
+          "#d03e25",
+          "#e06652",
+          "#e99486",
+          "#f3c2ba",
+          "#fbece9"
+        ]
+      },
+      "gardenia-cover": {
+        "role": "secondary",
+        "displayName": "Gardenia Cover",
+        "canonical": "#bd9a5a",
+        "tonalRamp": [
+          "#372b16",
+          "#5f4b26",
+          "#876a36",
+          "#af8a46",
+          "#c5a66d",
+          "#d6c199",
+          "#e8dbc5",
+          "#f8f4ed"
+        ]
+      },
+      "cover-board": {
+        "role": "secondary",
+        "displayName": "Cover Board",
+        "canonical": "#8f7543",
+        "tonalRamp": [
+          "#342b18",
+          "#5a4a2a",
+          "#80693c",
+          "#a7884e",
+          "#bea574",
+          "#d1c09e",
+          "#e5dbc7",
+          "#f7f4ee"
+        ]
+      },
+      "blank-cover": {
+        "role": "secondary",
+        "displayName": "Blank Cover",
+        "canonical": "#d6cbb3",
+        "tonalRamp": [
+          "#322a1b",
+          "#564a2e",
+          "#7b6942",
+          "#9f8856",
+          "#b8a47a",
+          "#cdc0a2",
+          "#e2dbca",
+          "#f6f4ee"
+        ]
+      },
+      "slip-paper": {
+        "role": "secondary",
+        "displayName": "Slip Paper",
+        "canonical": "#f4eddd",
+        "tonalRamp": [
+          "#3a2e13",
+          "#645020",
+          "#8f712e",
+          "#b9933c",
+          "#cdad65",
+          "#dcc693",
+          "#ebdec1",
+          "#f9f5ec"
+        ]
+      },
+      "page-hanji": {
+        "role": "secondary",
+        "displayName": "Page Hanji",
+        "canonical": "#f2ead8",
+        "tonalRamp": [
+          "#392e13",
+          "#634f21",
+          "#8e702f",
+          "#b8923d",
+          "#ccad66",
+          "#dbc594",
+          "#ebdec2",
+          "#f9f5ec"
+        ]
+      },
+      "page-block-line": {
+        "role": "secondary",
+        "displayName": "Page Block Line",
+        "canonical": "#cdbf9f",
+        "tonalRamp": [
+          "#322b1a",
+          "#574a2d",
+          "#7c6a41",
+          "#a18954",
+          "#b9a679",
+          "#cec0a1",
+          "#e3dbc9",
+          "#f6f4ee"
+        ]
+      },
+      "plaque-lacquer": {
+        "role": "tertiary",
+        "displayName": "Plaque Lacquer",
+        "canonical": "#1d1e23",
+        "tonalRamp": [
+          "#23242a",
+          "#3c3e49",
+          "#565867",
+          "#6f7386",
+          "#8f93a3",
+          "#b1b3be",
+          "#d2d4da",
+          "#f1f1f3"
+        ]
+      },
+      "plaque-gold": {
+        "role": "tertiary",
+        "displayName": "Plaque Gold",
+        "canonical": "#d8b66a",
+        "tonalRamp": [
+          "#3d2f10",
+          "#69511c",
+          "#967327",
+          "#c29633",
+          "#d5b05d",
+          "#e1c88e",
+          "#eedfbe",
+          "#faf5eb"
+        ]
+      },
+      "noerok-green": {
+        "role": "tertiary",
+        "displayName": "Noerok Green",
+        "canonical": "#3f7a68",
+        "tonalRamp": [
+          "#1a322b",
+          "#2d574b",
+          "#407c6a",
+          "#53a18a",
+          "#78baa6",
+          "#a1cec0",
+          "#c9e3db",
+          "#eef6f4"
+        ]
+      },
+      "layer-base": {
+        "role": "tertiary",
+        "displayName": "Layer Tone: Base and Terrace",
+        "canonical": "#8f8b80",
+        "tonalRamp": [
+          "#292724",
+          "#46443e",
+          "#646158",
+          "#827e73",
+          "#9f9c93",
+          "#bcbab3",
+          "#d9d7d4",
+          "#f3f3f1"
+        ]
+      },
+      "layer-frame": {
+        "role": "tertiary",
+        "displayName": "Layer Tone: Timber Frame",
+        "canonical": "#8e3b2a",
+        "tonalRamp": [
+          "#3b1911",
+          "#662b1e",
+          "#923d2b",
+          "#bd4e38",
+          "#d07462",
+          "#de9e91",
+          "#ecc8c0",
+          "#f9eeeb"
+        ]
+      },
+      "layer-brackets": {
+        "role": "tertiary",
+        "displayName": "Layer Tone: Brackets",
+        "canonical": "#3f7a68",
+        "tonalRamp": [
+          "#1a322b",
+          "#2d574b",
+          "#407c6a",
+          "#53a18a",
+          "#78baa6",
+          "#a1cec0",
+          "#c9e3db",
+          "#eef6f4"
+        ]
+      },
+      "layer-eaves": {
+        "role": "tertiary",
+        "displayName": "Layer Tone: Eaves",
+        "canonical": "#2f5d7c",
+        "tonalRamp": [
+          "#152a37",
+          "#244860",
+          "#346789",
+          "#4385b2",
+          "#6ba2c7",
+          "#97bed8",
+          "#c4dae9",
+          "#edf3f8"
+        ]
+      },
+      "layer-roof": {
+        "role": "tertiary",
+        "displayName": "Layer Tone: Roof",
+        "canonical": "#45484d",
+        "tonalRamp": [
+          "#242628",
+          "#3f4146",
+          "#595d64",
+          "#747981",
+          "#93989f",
+          "#b4b7bc",
+          "#d4d6d8",
+          "#f2f2f3"
+        ]
+      },
+      "layer-finishes": {
+        "role": "tertiary",
+        "displayName": "Layer Tone: Doors and Finishes",
+        "canonical": "#c07a35",
+        "tonalRamp": [
+          "#3c2611",
+          "#68421d",
+          "#945e29",
+          "#c07a35",
+          "#d3995f",
+          "#e0b78f",
+          "#edd6bf",
+          "#f9f2eb"
+        ]
+      },
+      "layer-ornaments": {
+        "role": "tertiary",
+        "displayName": "Layer Tone: Throne and Ornaments",
+        "canonical": "#c39a32",
+        "tonalRamp": [
+          "#3d3010",
+          "#6a531b",
+          "#967727",
+          "#c39a32",
+          "#d5b35d",
+          "#e2ca8d",
+          "#eee1be",
+          "#faf6eb"
+        ]
+      },
+      "hanji": {
+        "role": "neutral",
+        "displayName": "Hanji",
+        "canonical": "#efe6d3",
+        "tonalRamp": [
+          "#382d14",
+          "#614d23",
+          "#8a6e32",
+          "#b48f41",
+          "#c9aa69",
+          "#d9c496",
+          "#e9ddc3",
+          "#f8f4ec"
+        ]
+      },
+      "hanji-light": {
+        "role": "neutral",
+        "displayName": "Hanji Light",
+        "canonical": "#f7f1e4",
+        "tonalRamp": [
+          "#3b2e11",
+          "#66501e",
+          "#92712b",
+          "#bd9338",
+          "#d0ad62",
+          "#dec691",
+          "#ecdec0",
+          "#f9f5eb"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#1d1a16",
+        "tonalRamp": [
+          "#2b2721",
+          "#4b4439",
+          "#6b6051",
+          "#8b7d6a",
+          "#a79b8b",
+          "#c1b9ae",
+          "#dcd7d1",
+          "#f4f2f0"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Ink Soft",
+        "canonical": "#4b443a",
+        "tonalRamp": [
+          "#2b2721",
+          "#4b443a",
+          "#6a6052",
+          "#8a7d6b",
+          "#a69b8c",
+          "#c1b9ae",
+          "#dbd7d1",
+          "#f4f3f1"
+        ]
+      },
+      "ink-faint": {
+        "role": "neutral",
+        "displayName": "Ink Faint",
+        "canonical": "#685f52",
+        "tonalRamp": [
+          "#2a2722",
+          "#49443b",
+          "#686154",
+          "#877e6d",
+          "#a49c8e",
+          "#bfb9b0",
+          "#dbd7d2",
+          "#f4f3f1"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hanja building name in the shelf caption."
+      },
+      "display-vertical": {
+        "displayName": "Display Vertical",
+        "purpose": "Drafting title set vertically beside the ink plates."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Catalog head (記錄) and ledger record names, vertical where possible."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Panel heading (일곱 켜) and room plaque."
+      },
+      "title-item": {
+        "displayName": "Title Item",
+        "purpose": "Layer names in the reading panel."
+      },
+      "body-lead": {
+        "displayName": "Body Lead",
+        "purpose": "Catalog introduction, line-height 2, max 34em."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Summaries and layer descriptions, max 40ch in the caption."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Meta lines, tool buttons, colophon, hints; spaced, never uppercase."
+      },
+      "label-action": {
+        "displayName": "Label Action",
+        "purpose": "The ink label beside the 入 seal button."
+      },
+      "numeral": {
+        "displayName": "Numeral",
+        "purpose": "Volume count (第一卷) in the pager."
+      }
+    },
+    "shadows": [
+      {
+        "name": "book-board",
+        "value": "0 30px 50px -30px #2a1d1080",
+        "purpose": "Under the back board of each book."
+      },
+      {
+        "name": "contact",
+        "value": "radial-gradient(closest-side, #2a1d1055, transparent)",
+        "purpose": "Ellipse where a book meets the floor; fades when the book opens."
+      },
+      {
+        "name": "gutter",
+        "value": "linear-gradient(270deg, #5a46281f, transparent 14%)",
+        "purpose": "Page darkening at the binding."
+      },
+      {
+        "name": "cover-press",
+        "value": "inset 0 0 0 1px #6b52284d, inset -2px 0 0 #6b522866, inset 0 0 40px #5a3f1a33",
+        "purpose": "Board edges and pressed centre of the gardenia cover."
+      },
+      {
+        "name": "seal-keyline",
+        "value": "inset 0 0 0 2px #b8432b, inset 0 0 0 4px #f6e9d699",
+        "purpose": "Carved inner rule that makes a vermilion square read as a stamped seal."
+      },
+      {
+        "name": "panel-frame",
+        "value": "inset 0 0 0 1px #1d1a1622, inset 0 0 0 5px #f7f1e4, inset 0 0 0 6px #b8432b55",
+        "purpose": "Mounted-paper double rule around the reading panel (with backdrop-filter: blur(8px) over hanji-light at 85%)."
+      },
+      {
+        "name": "plaque-rings",
+        "value": "0 0 0 2px #b8432b, 0 0 0 5px #3f7a68, 0 0 0 6px #e9dcc0, 0 10px 24px #0004",
+        "purpose": "Dancheong framing of the 현판 name board."
+      },
+      {
+        "name": "dialog",
+        "value": "inset 0 0 0 1.5px #1d1a16, 0 20px 50px #0003",
+        "purpose": "Error dialog; the only lifted surface."
+      },
+      {
+        "name": "focus",
+        "value": "outline: 1.5px solid #b8432b; outline-offset: 5px",
+        "purpose": "Every focusable element; 10px offset on the active book cover."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-shelf",
+        "value": "cubic-bezier(.65,0,.2,1)",
+        "purpose": "Track slide (1.05s), tilt (1.05s) and cover angle (1.2s) on the shelf."
+      },
+      {
+        "name": "open-angle",
+        "value": "@property --open { syntax: \"<angle>\"; inherits: true; initial-value: 0deg }",
+        "purpose": "Cover hinge angle: 0deg closed, 17deg on hover of the active book, 180deg open (positive swings toward the viewer)."
+      },
+      {
+        "name": "tilt-angle",
+        "value": "@property --tilt { syntax: \"<angle>\"; inherits: true; initial-value: 22deg }",
+        "purpose": "Book Y rotation: 26deg inactive, 16deg active (shows fore-edge), 0deg open."
+      },
+      {
+        "name": "dive",
+        "value": "scale(3.3) from 50% 64%, 1.5s cubic-bezier(.75,0,.3,1); opacity out .9s after .55s",
+        "purpose": "Camera dives into the open spread before the room appears."
+      },
+      {
+        "name": "cover-face-swap",
+        "value": "opacity 0s delayed .55s (.6s on close)",
+        "purpose": "Swap outer and inner cover faces at the midpoint of the turn."
+      },
+      {
+        "name": "ease-rise",
+        "value": "cubic-bezier(.2,.8,.2,1)",
+        "purpose": "Caption lines and layer details rise 8px in (0.7s / 0.55s, staggered 0.06s); room chrome eases in over 0.9s."
+      },
+      {
+        "name": "ease-spring",
+        "value": "cubic-bezier(.16,1,.3,1)",
+        "purpose": "Seal hover (rotate -6deg, scale 1.07, 0.45s) and layer diamond pop (0.3s)."
+      },
+      {
+        "name": "wake-stagger",
+        "value": "calc(var(--k) * .16s)",
+        "purpose": "Books rise 40px in, one after another, on first load."
+      },
+      {
+        "name": "stamp",
+        "value": ".28s cubic-bezier(.5,0,.8,.4)",
+        "purpose": "落款 seal drops from scale 1.8, -8deg to scale 1, -4deg."
+      },
+      {
+        "name": "plate-draft",
+        "value": "mask linear-gradient(0deg) driven by --r",
+        "purpose": "Ink plates draft bottom-up while the model loads; fade over 2s as the 3D stage fades in over 1.3s."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "durations .01ms, delays 0s",
+        "purpose": "prefers-reduced-motion collapses every transition and animation."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "narrow",
+        "value": "max-width: 759px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Seal Button (入)",
+      "kind": "button",
+      "refersTo": "seal-button",
+      "description": "Vermilion seal plus ink label; the primary action to open a book.",
+      "html": "<button class=\"ds-enter\"><span class=\"ds-enter-seal\" aria-hidden=\"true\">入</span><span class=\"ds-enter-label\">책을 펼쳐 들어가기</span></button>",
+      "css": ".ds-enter{display:inline-flex;align-items:center;gap:14px;border:0;background:none;padding:0;font-family:\"Gowun Batang\",serif;font-size:15px;letter-spacing:.14em;color:#1d1a16;cursor:pointer}.ds-enter-seal{width:42px;height:42px;display:grid;place-items:center;background:#b8432b;color:#f6e9d6;font-family:\"Noto Serif KR\",serif;font-weight:900;font-size:21px;box-shadow:inset 0 0 0 2px #b8432b,inset 0 0 0 4px #f6e9d699;transition:transform .45s cubic-bezier(.16,1,.3,1)}.ds-enter-label{border-bottom:1px solid #1d1a1666;padding-bottom:4px;transition:border-color .2s}.ds-enter:hover .ds-enter-seal{transform:rotate(-6deg) scale(1.07)}.ds-enter:hover .ds-enter-label{border-color:#b8432b}.ds-enter:focus-visible{outline:1.5px solid #b8432b;outline-offset:5px}"
+    },
+    {
+      "name": "Ink Button",
+      "kind": "button",
+      "refersTo": "ink-button",
+      "description": "Square 1.5px ink-framed button on translucent hanji; inverts on hover.",
+      "html": "<button class=\"ds-ink-btn\">책 덮고 나가기</button>",
+      "css": ".ds-ink-btn{border:1.5px solid #1d1a16;background:#f7f1e4cc;color:#1d1a16;padding:10px 16px;font-family:\"Gowun Batang\",serif;font-size:13.5px;letter-spacing:.1em;border-radius:0;cursor:pointer;transition:background .2s,color .2s}.ds-ink-btn:hover{background:#1d1a16;color:#f7f1e4}.ds-ink-btn:focus-visible{outline:1.5px solid #b8432b;outline-offset:5px}"
+    },
+    {
+      "name": "Pager",
+      "kind": "nav",
+      "refersTo": "pager-button",
+      "description": "Circular chevron buttons around the volume count.",
+      "html": "<nav class=\"ds-pager\"><button class=\"ds-pager-btn\" disabled aria-label=\"이전 책\"><svg viewBox=\"0 0 24 24\"><path d=\"M15 5l-7 7 7 7\"/></svg></button><span class=\"ds-pager-index\"><b>第一卷</b>/ 전 1권</span><button class=\"ds-pager-btn\" aria-label=\"다음 책\"><svg viewBox=\"0 0 24 24\"><path d=\"M9 5l7 7-7 7\"/></svg></button></nav>",
+      "css": ".ds-pager{display:flex;align-items:center;gap:16px}.ds-pager-btn{width:46px;height:46px;display:grid;place-items:center;border:1px solid #1d1a1640;background:transparent;border-radius:50%;cursor:pointer;transition:border-color .2s,background .2s}.ds-pager-btn svg{width:18px;height:18px;fill:none;stroke:#1d1a16;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}.ds-pager-btn:hover:not(:disabled){border-color:#1d1a16;background:#1d1a160a}.ds-pager-btn:disabled{opacity:.3;cursor:default}.ds-pager-btn:focus-visible{outline:1.5px solid #b8432b;outline-offset:5px}.ds-pager-index{font-family:\"Noto Serif KR\",serif;font-size:14px;color:#685f52;display:flex;gap:8px;align-items:baseline}.ds-pager-index b{font-weight:700;font-size:17px;letter-spacing:.08em;color:#1d1a16}"
+    },
+    {
+      "name": "Bound Book Cover",
+      "kind": "card",
+      "refersTo": "book-cover",
+      "description": "Gardenia 능화문 cover with vertical hanja title slip and five-stitch red thread binding.",
+      "html": "<div class=\"ds-book\"><span class=\"ds-slip\"><b>勤政殿圖說</b><small>경복궁</small></span><span class=\"ds-thread\"><i style=\"--y:.12\"></i><i style=\"--y:.31\"></i><i style=\"--y:.5\"></i><i style=\"--y:.69\"></i><i style=\"--y:.88\"></i></span></div>",
+      "css": ".ds-book{position:relative;width:196px;height:280px;background:#bd9a5a;box-shadow:inset 0 0 0 1px #6b52284d,inset -2px 0 0 #6b522866,inset 0 0 40px #5a3f1a33,0 30px 50px -30px #2a1d1080;transition:transform .6s cubic-bezier(.65,0,.2,1)}.ds-book:hover{transform:perspective(900px) rotateY(-10deg)}.ds-slip{position:absolute;left:9%;top:6%;width:23%;height:54%;display:flex;flex-direction:column;align-items:center;gap:.8em;padding:.9em 0;writing-mode:vertical-rl;background:#f4eddd;box-shadow:0 0 0 1px #8a6d3a40,0 1px 2px #5a3f1a33}.ds-slip b{font-family:\"Noto Serif KR\",serif;font-weight:900;font-size:16px;letter-spacing:.14em;color:#1d1a16;line-height:1}.ds-slip small{font-family:\"Gowun Batang\",serif;font-size:7.5px;letter-spacing:.3em;color:#685f52}.ds-thread{position:absolute;right:0;top:0;bottom:0;width:11%}.ds-thread::before{content:\"\";position:absolute;right:48%;top:9%;bottom:9%;width:3px;border-radius:2px;background:linear-gradient(90deg,#7a1d12,#e2705d 45%,#9a2b1c 70%,#6e1a10)}.ds-thread i{position:absolute;right:0;top:calc(var(--y)*100%);width:calc(48% + 3px);height:3px;margin-top:-1.5px;border-radius:2px 0 0 2px;background:linear-gradient(180deg,#7a1d12,#e2705d 45%,#9a2b1c 70%,#6e1a10)}"
+    },
+    {
+      "name": "Layer Row with Seal",
+      "kind": "chip",
+      "refersTo": "layer-seal",
+      "description": "Reading-panel layer toggle: hanja-numeral seal, Korean name, English gloss, dancheong diamond when active.",
+      "html": "<ul class=\"ds-layers\"><li><button class=\"ds-layer\" aria-pressed=\"true\" style=\"--tone:#3f7a68\"><span class=\"ds-seal\">三</span><span class=\"ds-nm\">공포부</span><span class=\"ds-en\">BRACKETS</span></button></li><li><button class=\"ds-layer\" aria-pressed=\"false\" style=\"--tone:#2f5d7c\"><span class=\"ds-seal\">四</span><span class=\"ds-nm\">처마부</span><span class=\"ds-en\">EAVES</span></button></li></ul>",
+      "css": ".ds-layers{list-style:none;margin:0;padding:0 0 0 18px;width:300px}.ds-layers li+li{border-top:1px dotted #1d1a1640}.ds-layer{width:100%;display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:12px;padding:9px 4px;border:0;background:transparent;text-align:left;position:relative;cursor:pointer;color:#1d1a16}.ds-layer::before{content:\"\";position:absolute;left:-16px;top:50%;width:6px;height:6px;margin-top:-3px;background:var(--tone);transform:rotate(45deg) scale(0);transition:transform .3s cubic-bezier(.16,1,.3,1)}.ds-layer[aria-pressed=\"true\"]::before{transform:rotate(45deg) scale(1)}.ds-seal{display:inline-grid;place-items:center;width:26px;height:26px;border:1.5px solid #b8432b;color:#b8432b;font-family:\"Noto Serif KR\",serif;font-weight:700;font-size:13px;line-height:1;transition:background .25s,color .25s}.ds-layer:hover .ds-seal{background:#b8432b1a}.ds-layer[aria-pressed=\"true\"] .ds-seal{background:#b8432b;color:#f7f1e4}.ds-layer:focus-visible{outline:1.5px solid #b8432b;outline-offset:5px}.ds-nm{font-family:\"Noto Serif KR\",serif;font-weight:700;font-size:15.5px;letter-spacing:.04em}.ds-en{font-size:11px;letter-spacing:.16em;color:#4b443a}"
+    },
+    {
+      "name": "Mode Toggle (온채 / 홑겹)",
+      "kind": "nav",
+      "refersTo": "mode-toggle-active",
+      "description": "Two-segment ink-framed toggle; active segment filled ink.",
+      "html": "<div class=\"ds-modes\" role=\"group\"><button aria-pressed=\"true\">온채</button><button aria-pressed=\"false\">홑겹</button></div>",
+      "css": ".ds-modes{display:inline-flex;border:1.5px solid #1d1a16}.ds-modes button{border:0;background:transparent;color:#1d1a16;padding:6px 12px;font-family:\"Gowun Batang\",serif;font-size:13px;letter-spacing:.14em;cursor:pointer}.ds-modes button[aria-pressed=\"true\"]{background:#1d1a16;color:#f7f1e4}.ds-modes button:hover:not([aria-pressed=\"true\"]){background:#1d1a160a}.ds-modes button:focus-visible{outline:1.5px solid #b8432b;outline-offset:3px}"
+    },
+    {
+      "name": "Room Panel",
+      "kind": "card",
+      "refersTo": "room-panel",
+      "description": "Translucent mounted hanji with a double rule and faint vermilion line.",
+      "html": "<aside class=\"ds-panel\"><h2>일곱 켜</h2><p>지붕의 무게를 기둥으로 모아 내리는 짜임. 처마를 길게 내밀 수 있게 합니다.</p></aside>",
+      "css": ".ds-panel{width:320px;padding:22px 22px 26px;background:#f7f1e4d9;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px #1d1a1622,inset 0 0 0 5px #f7f1e4,inset 0 0 0 6px #b8432b55;color:#1d1a16}.ds-panel h2{margin:0 0 12px;font-family:\"Noto Serif KR\",serif;font-weight:900;font-size:20px;letter-spacing:.24em}.ds-panel p{margin:0;font-family:\"Gowun Batang\",serif;font-size:14.5px;line-height:1.9;color:#4b443a}"
+    },
+    {
+      "name": "Plaque (현판)",
+      "kind": "custom",
+      "refersTo": "plaque",
+      "description": "Building name board: gold hanja on lacquer, dancheong rings.",
+      "html": "<span class=\"ds-plaque\"><span>勤</span><span>政</span><span>殿</span></span>",
+      "css": ".ds-plaque{display:inline-flex;flex-direction:row-reverse;gap:.18em;padding:.42em .7em;font-family:\"Noto Serif KR\",serif;font-weight:900;font-size:26px;line-height:1;background:linear-gradient(160deg,#1d1e23,#0f1013);color:#d8b66a;box-shadow:0 0 0 2px #b8432b,0 0 0 5px #3f7a68,0 0 0 6px #e9dcc0,0 10px 24px #0004}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Bound Shelf on Hanji",
+    "overview": "The archive is a reading room, not a website. Every building is one Joseon thread-bound book (선장본) standing on a sheet of hanji: gardenia-yellow cover pressed with a 능화문 diamond pattern, a white 제첨 title slip carrying the hanja title vertically, five red-thread stitches (오침안정법) down the right binding edge, and a visible page block. The shelf grows by one blank book at a time. Opening a book swings the cover on its binding, shows a model-rendered ink elevation across the gutter, and dives into it; the room that follows is the same hanji, where ink plates draft bottom-up, a vermilion 落款 seal lands, and the drawing dissolves into the 3D building with a seven-layer reading panel.\n\nDensity is low and deliberate. Empty paper carries the weight; one book is forward, the rest recede (55% opacity, desaturated, pushed back 220px in Z). Type is ink on paper, vertical where Korean bookmaking would set it vertical. Colour beyond ink and paper is pigment, not interface: gardenia on covers, vermilion on seals and binding, dancheong tones only as layer markers. The literal hanok facade and the web card carousel are both rejected; the book is the container.\n\nMotion is the memory. Covers do not slide; they hinge, driven by registered angle properties so the browser interpolates the turn itself. Every sequence is slow in, firm out, and reduced-motion collapses all of it to instant.",
+    "keyCharacteristics": [
+      "Hanji ground everywhere, with a multiplied paper texture at about 26% over flat hanji.",
+      "Ink-black serif type in two voices: Noto Serif KR for titles, Gowun Batang for reading.",
+      "Vertical writing for titles, slips, ledger numbers and the brand line.",
+      "Physical 3D books built from CSS planes (back board, fore-edge, top edge, page, hinged cover).",
+      "Vermilion as seal and binding, never as surface.",
+      "Square corners; the only circles are the pager buttons."
+    ],
+    "rules": [
+      {
+        "name": "The Seal Rule",
+        "body": "Vermilion marks a seal, the binding thread, focus, or a hover answer on an ink line. If it is filling more than a seal-sized square (about 26–62px), it is wrong.",
+        "section": "colors"
+      },
+      {
+        "name": "The Pigment-Is-Material Rule",
+        "body": "Gardenia, thread red and dancheong tones belong to the objects they describe (cover, binding, layer). They never become UI accents elsewhere.",
+        "section": "colors"
+      },
+      {
+        "name": "The Vertical Title Rule",
+        "body": "Hanja titles, the brand line, ledger numerals and slip text run vertical-rl, as a bound book would set them. Running text stays horizontal.",
+        "section": "typography"
+      },
+      {
+        "name": "The Two Voices Rule",
+        "body": "Noto Serif KR names things; Gowun Batang explains them. Do not set a paragraph in the display face or a title in the body face.",
+        "section": "typography"
+      },
+      {
+        "name": "The Paper-Casts-Paper Rule",
+        "body": "Every shadow must be one a physical book or sheet would cast. No floating cards, no glow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** put every building in a book: gardenia 능화문 cover, vertical hanja title slip, five-stitch red thread on the right edge, visible page block.",
+      "**Do** keep one blank book at the end of the shelf so the collection reads as growing.",
+      "**Do** keep the ground hanji with the paper texture multiplied at about 26%; multiply ink drawings into it rather than placing them on white.",
+      "**Do** set titles in Noto Serif KR 900 and reading text in Gowun Batang, vertical where a bound book would be.",
+      "**Do** use the 1.5px vermilion focus outline (offset 5px, 10px on the active cover) for every focusable element.",
+      "**Do** animate opening through the registered angle properties and honour reduced motion."
+    ],
+    "donts": [
+      "**Don't** use vermilion as a panel, page or button fill beyond seal size (The Seal Rule).",
+      "**Don't** draw a literal hanok facade (SVG eaves, lattice doors) or lay buildings out as a web card carousel.",
+      "**Don't** round paper: covers, slips, panels and buttons stay square; circles are for the pager only.",
+      "**Don't** introduce a sans-serif or a second display face.",
+      "**Don't** set small reading text in Ink Faint; it is below 4.5:1 on hanji.",
+      "**Don't** use dancheong layer tones outside the layer markers and the plaque."
+    ]
+  }
+}

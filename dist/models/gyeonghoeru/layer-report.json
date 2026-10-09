@@ -1,0 +1,146 @@
+{
+ "source": "Gyeonghoeru.fbx",
+ "layers": {
+  "base": 166026,
+  "brackets": 139642,
+  "frame": 223520,
+  "finishes": 595198,
+  "roof": 139332,
+  "eaves": 87838,
+  "ornaments": 700
+ },
+ "materials": {
+  "MI_KHL_Land02A": {
+   "layer": "base",
+   "triangles": 80
+  },
+  "MI_KHL_Soro": {
+   "layer": "brackets",
+   "triangles": 16096
+  },
+  "MI_KHL_Green_wood": {
+   "layer": "frame",
+   "triangles": 192496
+  },
+  "MI_KHL_Doorpaper01A": {
+   "layer": "finishes",
+   "triangles": 2144
+  },
+  "MI_KHL_Metal": {
+   "layer": "finishes",
+   "triangles": 112904
+  },
+  "MI_KHL_Stone": {
+   "layer": "base",
+   "triangles": 2832
+  },
+  "MI_KHL_Changbang01A": {
+   "layer": "frame",
+   "triangles": 16980
+  },
+  "MI_KHL_Redpillar": {
+   "layer": "frame",
+   "triangles": 2688
+  },
+  "MI_KHL_Gongpoes": {
+   "layer": "brackets",
+   "triangles": 123546
+  },
+  "MI_KHL_Wall": {
+   "layer": "finishes",
+   "triangles": 3600
+  },
+  "MI_KHL_Redwood": {
+   "layer": "frame",
+   "triangles": 3360
+  },
+  "MI_KHL_WhiteWall01A": {
+   "layer": "finishes",
+   "triangles": 96
+  },
+  "MI_KHL_Rooformament01B": {
+   "layer": "roof",
+   "triangles": 45144
+  },
+  "MI_KHL_Rooformament01C": {
+   "layer": "roof",
+   "triangles": 17856
+  },
+  "MI_KHL_Pillar01A": {
+   "layer": "base",
+   "triangles": 2256
+  },
+  "MI_KHL_Changbang01B": {
+   "layer": "frame",
+   "triangles": 7900
+  },
+  "MI_KHL_Windowframe": {
+   "layer": "finishes",
+   "triangles": 389728
+  },
+  "MI_KHL_AngelRafter": {
+   "layer": "eaves",
+   "triangles": 13568
+  },
+  "MI_KHL_Giwa01A": {
+   "layer": "roof",
+   "triangles": 10752
+  },
+  "MI_KHL_Giwa02A": {
+   "layer": "roof",
+   "triangles": 58692
+  },
+  "MI_KHL_Stela": {
+   "layer": "ornaments",
+   "triangles": 700
+  },
+  "MI_KHL_Buyeon": {
+   "layer": "eaves",
+   "triangles": 71580
+  },
+  "MI_KHL_Rooformament01A": {
+   "layer": "roof",
+   "triangles": 1104
+  },
+  "MI_KHL_Greenwoo01A": {
+   "layer": "frame",
+   "triangles": 96
+  },
+  "MI_KHL_Roofstone": {
+   "layer": "roof",
+   "triangles": 1952
+  },
+  "MI_KHL_Yeonhwadae": {
+   "layer": "base",
+   "triangles": 2474
+  },
+  "MI_KHL_Gable": {
+   "layer": "roof",
+   "triangles": 3832
+  },
+  "MI_KHL_Roof01A": {
+   "layer": "eaves",
+   "triangles": 2690
+  },
+  "MI_KHL_Ceiling": {
+   "layer": "finishes",
+   "triangles": 85774
+  },
+  "MI_KHL_Floor01A": {
+   "layer": "finishes",
+   "triangles": 288
+  },
+  "MI_KHL_Floor02A": {
+   "layer": "finishes",
+   "triangles": 664
+  },
+  "MI_KHL_Stair": {
+   "layer": "base",
+   "triangles": 158360
+  },
+  "MI_KHL_Land01A": {
+   "layer": "base",
+   "triangles": 24
+  }
+ }
+}

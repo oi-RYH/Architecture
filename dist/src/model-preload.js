@@ -1,5 +1,5 @@
 import * as T from 'three';
-import {loadArchitecture} from './model-loader.js?v=architecture-2';
+import {loadArchitecture} from './model-loader.js?v=architecture-3';
 import {instanceMembers} from './member-instancing.js';
 const nextFrame=()=>new Promise(resolve=>requestAnimationFrame(resolve));
 export async function loadDetailedArchitecture(config,definitions,report){

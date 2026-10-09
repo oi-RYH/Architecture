@@ -1,0 +1,83 @@
+{
+ "provider": "국가유산청",
+ "title": "경복궁 경회루",
+ "source": "국보_경복궁_경회루.zip (Gyeonghoeru.fbx + 61 PNG textures), downloaded 2026-10-09",
+ "license": "원 자료의 공공누리 유형 확인 필요 (다운로드 페이지 기준으로 기재할 것)",
+ "sourceMeshObjects": 1,
+ "sourceMaterials": 33,
+ "sourceTriangles": 1352256,
+ "layering": "원본이 하나로 합쳐진 메시라 재질 단위로 일곱 켜에 배정했습니다. 개별 부재 분류가 아니며 해체·결구 순서를 뜻하지 않습니다.",
+ "layerTriangles": {
+  "base": 166026,
+  "brackets": 139642,
+  "frame": 223520,
+  "finishes": 595198,
+  "roof": 139332,
+  "eaves": 87838,
+  "ornaments": 700
+ },
+ "materialToLayer": {
+  "MI_KHL_Land02A": "base",
+  "MI_KHL_Soro": "brackets",
+  "MI_KHL_Green_wood": "frame",
+  "MI_KHL_Doorpaper01A": "finishes",
+  "MI_KHL_Metal": "finishes",
+  "MI_KHL_Stone": "base",
+  "MI_KHL_Changbang01A": "frame",
+  "MI_KHL_Redpillar": "frame",
+  "MI_KHL_Gongpoes": "brackets",
+  "MI_KHL_Wall": "finishes",
+  "MI_KHL_Redwood": "frame",
+  "MI_KHL_WhiteWall01A": "finishes",
+  "MI_KHL_Rooformament01B": "roof",
+  "MI_KHL_Rooformament01C": "roof",
+  "MI_KHL_Pillar01A": "base",
+  "MI_KHL_Changbang01B": "frame",
+  "MI_KHL_Windowframe": "finishes",
+  "MI_KHL_AngelRafter": "eaves",
+  "MI_KHL_Giwa01A": "roof",
+  "MI_KHL_Giwa02A": "roof",
+  "MI_KHL_Stela": "ornaments",
+  "MI_KHL_Buyeon": "eaves",
+  "MI_KHL_Rooformament01A": "roof",
+  "MI_KHL_Greenwoo01A": "frame",
+  "MI_KHL_Roofstone": "roof",
+  "MI_KHL_Yeonhwadae": "base",
+  "MI_KHL_Gable": "roof",
+  "MI_KHL_Roof01A": "eaves",
+  "MI_KHL_Ceiling": "finishes",
+  "MI_KHL_Floor01A": "finishes",
+  "MI_KHL_Floor02A": "finishes",
+  "MI_KHL_Stair": "base",
+  "MI_KHL_Land01A": "base"
+ },
+ "geometrySimplified": false,
+ "draco": {
+  "positionBits": 16,
+  "normalBits": 10,
+  "texcoordBits": 14,
+  "level": 6
+ },
+ "textures": {
+  "format": "KTX2 (KHR_texture_basisu), KTX-Software 4.4.2 toktx — 근정전과 같은 설정",
+  "baseColor": "ETC1S qlevel 255 clevel 2, sRGB, mipmaps",
+  "normal": "UASTC quality 3 + Zstd 18, linear, mipmaps",
+  "colorMaxBeforeEncode": 2048,
+  "normalMaxBeforeEncode": 1024,
+  "normalConvention": "DirectX(원본, 언리얼 명명) → OpenGL로 G 채널 반전",
+  "missingInSource": "T_SJM_N.png (Ceiling, Giwa01A/02A, Stela의 노멀맵) — 원본 압축 파일에 없어 연결 제외",
+  "alpha": "AngelRafter만 컷아웃(MASK), 나머지는 불투명. Doorpaper의 반투명 알파는 사용하지 않음",
+  "tool": "tools/ktx2_textures.py"
+ },
+ "material": {
+  "roughness": 0.78,
+  "metallic": "Metal 0.35, 그 외 0"
+ },
+ "conversion": "tools/convert_gyeonghoeru.py (Blender 4.5.2)",
+ "elevationPlates": "dist/assets/archive/gyeonghoeru/plate-*.webp — 같은 모델의 정면 직교 렌더(tools/render-elevation-plates.js 방식)",
+ "realWorldMemberCountsVerified": false,
+ "interpretiveAdditions": {
+  "pond": "연못 수면과 섬 석축은 원본 자료에 없는 연출입니다(dist/src/archive/pond.js). 석축은 원본 Stone 텍스처를 재사용했고 크기·높이는 실측이 아닙니다. 화면에 '연못과 석축은 원본 자료에 없는 연출입니다'로 표기합니다.",
+  "waterModes": "그릇 모양의 물: 둥근 반사 수면(1/2 해상도, 반사 세기 0.7배, 흐림·탈색) + 반구 몸체(먹 번짐 셰이더). 섬 석축은 원본 Stone 텍스처의 닫힌 블록."
+ }
+}

@@ -8,3 +8,7 @@ node_modules/
 *.key
 originals/**/*.fbx
 originals/**/*.FBX
+
+# impeccable review captures
+.impeccable/review/
+.impeccable/questions/

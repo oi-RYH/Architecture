@@ -16,7 +16,7 @@ export async function loadArchitecture(config,definitions,onProgress=()=>{}){
    if(fast){onProgress('가벼운 탐색 모델 불러오는 중…');source=(await loader.loadAsync('./models/fast/palace.gltf')).scene;}
    else for(let i=0;i<config.assets.length;i++){
     const d={id:config.assets[i],name:"정밀 부재"};onProgress(`${d.name} 불러오는 중 (${i+1}/${config.assets.length})`);
-    const gltf=await loader.loadAsync(`./models/${d.id}.gltf?v=architecture-2`,e=>{if(e.total)onProgress(`${d.name} 불러오는 중 (${i+1}/${config.assets.length})`);});
+    const gltf=await loader.loadAsync(`${config.dir||'./models/'}${d.id}.gltf?v=${config.version||'architecture-2'}`,e=>{if(e.total)onProgress(`${d.name} 불러오는 중 (${i+1}/${config.assets.length})`);});
     gltf.scene.name=d.id;source.add(gltf.scene);
     await new Promise(resolve=>requestAnimationFrame(resolve));
    }

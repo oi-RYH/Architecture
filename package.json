@@ -1,1 +1,9 @@
-{"name":"geunjeongjeon-explorer","private":true,"type":"module","scripts":{"start":"python3 -m http.server 4173 --directory dist","check":"node --check dist/src/main.js && node --check dist/src/model-loader.js && node --check dist/src/procedural.js && node --check dist/src/layers.js"}}
+{
+  "name": "geunjeongjeon-explorer",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 4173 --directory dist",
+    "check": "node --check dist/src/model-loader.js && node --check dist/src/model-preload.js && node --check dist/src/member-instancing.js && node --check dist/src/view-gestures.js && node --check dist/src/procedural.js && node --check dist/src/layers.js && node --check dist/src/archive/app.js && node --check dist/src/archive/stage.js && node --check dist/src/archive/registry.js && node --check dist/src/archive/layers-gyeonghoeru.js && node --check dist/src/archive/pond.js"
+  }
+}

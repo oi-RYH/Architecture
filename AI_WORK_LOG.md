@@ -1,5 +1,24 @@
 # AI Work Log — Architecture
 
+## 2026-10-09 — 현재 기록관만 남기고 로컬 커밋
+
+- 사용자 요청: 현재 웹만 남겨 Git에 커밋하고 로컬 작업 위치 안내.
+- dist의 지도·드론 진입, 스크롤 산책, 단독 뷰어 및 전용 CSS/JS/지도 자료 18개 경로를 저장소 밖 /Users/baejeonghun/Documents/Codex/architecture-legacy-ntVVft로 이동. 미커밋 수정과 이전 README/CONTINUE_HERE 사본도 복구 가능하게 보존.
+- 현재 index의 지난 실험 링크 제거. README와 CONTINUE_HERE를 현재 웹 기준으로 갱신. 공유 모델 로더가 참조하는 procedural.js, 두 웹 모델, originals 원본은 보존.
+- package.json의 check 대상을 남아 있는 현재 모듈로 변경.
+- 실행 검사: npm run check, git diff --check, Node 기반 상대 import 존재 확인 및 신규 파일 100MiB 초과 검사 통과. dist의 웹 진입점이 index.html 하나인 것을 확인.
+- 이번 요청은 로컬 커밋만 수행하며 원격 push나 Sites 배포는 하지 않음. 새 기술 도입이나 지식 상태 변경 없음.
+
+## 2026-10-09 — 문화유산 설명을 공식 출처로 제한
+
+- 사용자 요청: 사견·추정 없이 공식 설명만 사용하고 근거 없는 설명은 분량이 줄더라도 생략.
+- 국가유산청 국가유산 디지털 서비스의 근정전·경회루 상세 페이지 본문, 상세정보, 현판 기록을 열어 대조. 출처별 범위는 CONTENT_SOURCES.md에 기록.
+- 현재 기록관 개요와 공유 레이어 설명을 확인된 사실만으로 축약. 3개 레이어 설명 및 부재 나열 태그 삭제. 원본 모델의 세부 부재와 일치한다고 추정한 해설과 건축 순서를 암시한 전환 문구 삭제.
+- 레이어 설명과 기록 목록에 공식 원문 링크 추가. 모델의 조작용 분류 및 책·낙관 연출을 공식 해설과 구분. AGENTS.md에 사용자 원칙을 지속 지침으로 기록.
+- 변경: dist/src/layers.js, dist/src/archive/layers-gyeonghoeru.js, registry.js, app.js, dist/index.html, AGENTS.md, CONTINUE_HERE.md, CONTENT_SOURCES.md, 이 로그. 모델·애니메이션·배포는 변경하지 않음.
+- 검증: npm run check 통과. node --input-type=module의 assert 검사로 14개 레이어, 출처 연결, 공란 3개, 시공 문구 제거 확인. curl -fsS http://127.0.0.1:4173/src/archive/registry.js는 서버 연결 실패. 기존 브라우저 탭도 찾지 못해 시각 검증은 수행하지 못함.
+- 이전 실험 페이지의 별도 고정 본문과 실제 3D 부재 전수 대조는 이번 범위 밖. 새 기술 도입이나 사용자 지식 상태 변경 없음.
+
 ## 2026-10-07 / 목표 장소를 향한 드론 비행 추가
 
 ### Purpose / User Request
@@ -223,3 +242,38 @@ git status --short
 - TECH: Scroll-driven 3D narrative and progressive enhancement — ❓. 스크롤 연동과 먼저 읽을 수 있는 HTML/SVG 원리를 설명할 수 있는지 선택적 질문으로 확인 요청했다. 답변 없이 이해한 상태로 변경하지 않는다.
 - WORKFLOW: Build an alternate entrance without replacing the existing route — ❓.
 - 기존 Camera dolly and animation easing은 ⬜ 상태를 유지했다. 이번에 사용했다는 이유로 이해한 것으로 추정하지 않는다.
+
+## 2026-10-09 — Layer selection pulse correction
+
+- Request: fix weak transparency and oscillate nonselected layers between 30–80% using a sine wave.
+- Changed `dist/src/archive/stage.js`, its import version in `app.js`, and the entry version in `dist/index.html`.
+- Replaced accumulating alpha blending for temporary emphasis with correlated screen-space coverage/discard in cloned material shaders; preserves source alpha masks and depth writes. Fine screen-door stippling is a deliberate tradeoff, not geometry simplification.
+- Formula: `0.55 + 0.25 * sin(elapsed / 1500 * 2π + π/2)`, two cycles within the existing three-second window; reduced-motion fixed at 55%. Selected layer and existing single-layer mode retained.
+- AI decision: synchronized pixel coverage across overlapping nonselected geometry, avoiding their alpha buildup. Original materials remain available for restoration and disposal.
+- Verification: `npm run check`; Node import of bundled Three.js verified shader insertion point and sampled sine extrema; actual 경회루 browser selection captured near the trough, console warnings/errors empty. No deployment or asset conversion.
+- Knowledge check: TECH `Sinusoidal emphasis and screen-door transparency` registered ❓. No understanding inferred.
+
+## 2026-10-09 — Reverse book exit
+
+- Request: return the live building to its frontal view, dissolve into the complete drawing, then close its book; do not replay construction/loading animation on exit.
+- Changed `stage.js`, `app.js`, `archive.css`, and entry/import cache versions in `index.html`/`app.js`.
+- Camera captures current orbit, zoom framing, panned target and explosion; interpolates to the existing elevation pose in 1800 ms. Restores whole-building materials, collapses exploded layers, then crossfades to fully revealed existing ink plates over 900 ms.
+- Exit hides drafting copy and seal; uses existing reverse book scaling (1500 ms) and cover hinge (1250 ms). Deep-link entries prepare an open book behind the room. Reduced-motion follows existing skipped waits and near-instant camera movement.
+- Same-building model remains cached in elevation mode for re-entry. No model quality changes or deployment.
+- Checks performed: `npm run check`; browser tested 근정전 with keyboard rotation/explosion, exit to complete frontal ink drawing, return to focused shelf; no captured console warnings/errors. Saved transition screenshot under `/private/tmp/architecture-closing-ink.png`.
+- Related existing knowledge: Camera dolly and animation easing; CSS 3D perspective and camera framing. No knowledge status changes inferred.
+
+## 2026-10-09 — 경회루 environment before model readiness
+
+- Request: render water and stone ground while 경회루 is loading.
+- Moved existing interpretive pond/stone embankment creation ahead of the heritage model request. `createPond` now supports missing model, immediate visibility, and later `attachModel` for original stone texture and reflection materials.
+- The loading scene renders the environment before model readiness. Pauses that loop during `warmArchitecture` because the same renderer uses offscreen targets; retains the last visible background frame. Hides the model until reveal. Keeps reverse-exit water fade using a dedicated closing flag.
+- Changed `pond.js`, `stage.js`, `app.js`, `archive.css`, and import/entry versions in `index.html`. No source assets, geometry quality, or deployment changed.
+- Commands: `npm run check`, `node --check dist/src/archive/pond.js`. Browser verified early 경회루 loading screenshot with water/stone already present, plus an earlier completed model view; no captured errors/warnings. Screenshot: `/private/tmp/architecture-pond-loading.png`.
+
+### Follow-up — hide during drawing, fade both at 3D transition
+
+- User clarified that early preparation must not be visible during drawing/loading. Removed the loading-stage CSS opacity override and immediate pond visibility; environment becomes visible only in intro/live modes.
+- Applied the same smooth 1.6-second opacity ramp to water and stone material. Removed vertical rise; retained reverse-exit fade and precreation independent of model loading.
+- Verified syntax checks; actual pond-module Node test (in-memory import remapped to bundled Three.js) passed hidden loading, equal 50% midpoint, full visibility, stationary position and fade-out. Initial direct Node import failed because browser import-map package `three` is not installed for Node; no dependency installed.
+- Browser captured loading with no water/stone and final 3D with both visible; no captured warnings/errors. A timed transition-selector wait exceeded its tool deadline, so midpoint was checked numerically rather than claimed as a captured browser frame. Loading screenshot: `/private/tmp/architecture-loading-no-water.png`.
