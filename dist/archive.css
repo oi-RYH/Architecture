@@ -1,5 +1,7 @@
 /* 반닫이 — 기록관. A row of thread-bound books, one per building → open one → a hanji room with the building. */
 :root{
+ /* Book motion timing — the single source for CSS and for app.js (readMs). */
+ --t-open:1.2s;--t-dive:1.5s;--t-tilt:1.05s;--t-fade:.9s;--d-fade:.55s;
  --hanji:#efe6d3;--hanji-3:#f7f1e4;--ink:#1d1a16;--ink-2:#4b443a;--ink-3:#685f52;
  --juhong:#b8432b;--gold:#d8b66a;
  --display:"Noto Serif KR","Nanum Myeongjo","AppleMyungjo",serif;
@@ -37,10 +39,13 @@ a{color:inherit}
 .stage-floor:focus-visible .slot.is-active .cover-front{outline:1.5px solid var(--juhong);outline-offset:10px}
 .track{position:absolute;left:50%;top:41%;margin:0;padding:0;list-style:none;width:0;height:0;transform-style:preserve-3d}
 .slot{position:absolute;left:calc(var(--bw) / -2);top:calc(var(--bh) / -2);width:var(--bw);height:var(--bh);cursor:pointer;transform-style:preserve-3d;will-change:transform,opacity;
- --open:0deg;transition:--open 1.2s var(--ease),--tilt .5s cubic-bezier(.16,1,.3,1),scale 1.5s cubic-bezier(.75,0,.3,1)}
+ --open:0deg;transition:--open var(--t-open) var(--ease),--tilt .5s cubic-bezier(.16,1,.3,1)}
+/* One motion definition for the book while it opens/dives and while it shuts: removing the
+   classes plays exactly the same transitions backwards. */
+.slot.is-open,.slot.is-shutting{transition:--open var(--t-open) var(--ease),--tilt var(--t-tilt) var(--ease),scale var(--t-dive) cubic-bezier(.75,0,.3,1),opacity var(--t-fade) ease var(--d-fade)}
 .slot.is-active:hover:not(.is-open){--open:17deg}
 
-.book{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateY(var(--tilt));transition:translate 1.2s var(--ease)}
+.book{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateY(var(--tilt));transition:translate var(--t-open) var(--ease)}
 .book>span{position:absolute}
 .b-back{inset:0;transform:translateZ(calc(var(--bt) / -2));background:#8f7543;box-shadow:0 30px 50px -30px #2a1d1080}
 .b-edge{top:1.5%;bottom:1.5%;left:calc(var(--bt) / -2);width:var(--bt);transform:rotateY(-90deg);
@@ -50,10 +55,11 @@ a{color:inherit}
 .b-page{inset:0;transform:translateZ(calc(var(--bt) / 2 - 1px));overflow:hidden;background:#f2ead8 url('./assets/hanji.jpg') center/360px;background-blend-mode:multiply}
 .b-page::after{content:"";position:absolute;inset:0;background:linear-gradient(270deg,#5a46281f,transparent 14%)}
 .b-cover{inset:0;transform-origin:100% 50%;transform-style:preserve-3d;transform:translateZ(calc(var(--bt) / 2)) rotateY(var(--open))}
-.cover-front,.cover-inside{position:absolute;inset:0;overflow:hidden;transition:opacity 0s .55s}
-.cover-inside{opacity:0}
-.slot.is-open .cover-front{opacity:0}.slot.is-open .cover-inside{opacity:1}
-.slot:not(.is-open) .cover-front,.slot:not(.is-open) .cover-inside{transition-delay:.6s}
+.cover-front,.cover-inside{position:absolute;inset:0;overflow:hidden}
+/* Faces follow the cover's actual angle: front while it leans toward the reader, inside once past
+   upright. No timers, so hover peeks, opening, and the instant re-open on leaving all stay in step. */
+.cover-front{opacity:clamp(0,calc(cos(var(--open)) * 1000),1)}
+.cover-inside{opacity:clamp(0,calc(cos(var(--open)) * -1000),1)}
 .cover-front{background:#bd9a5a url('./assets/neunghwa.webp') 0 0/40px;background-blend-mode:soft-light;
  box-shadow:inset 0 0 0 1px #6b52284d,inset -2px 0 0 #6b522866,inset 0 0 40px #5a3f1a33}
 .is-empty .cover-front{background-color:#d6cbb3}
@@ -69,8 +75,11 @@ a{color:inherit}
 .thread i{position:absolute;right:0;top:calc(var(--y) * 100%);width:calc(48% + 3px);height:3px;margin-top:-1.5px;border-radius:2px 0 0 2px;background:linear-gradient(180deg,#7a1d12,#e2705d 45%,#9a2b1c 70%,#6e1a10);box-shadow:0 1px 1.5px #3b1a0e55}
 .thread i::after{content:"";position:absolute;right:-2px;top:-.5px;width:4px;height:4px;border-radius:0 3px 3px 0;background:linear-gradient(90deg,#9a2b1c,#5e150c)}
 .thread i::before{content:"";position:absolute;left:-4px;top:-2.5px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 62% 62%,transparent 30%,#3a2612b0 46%,#6b4e2a55 62%,transparent 72%)}
-.half{position:absolute;inset:0;overflow:hidden;opacity:0;transition:opacity 0s .6s}
-.slot.is-open .half{opacity:1;transition-delay:0s}
+.half{position:absolute;inset:0;overflow:hidden}
+/* The left page's drawing also follows the cover angle: hidden under a hover peek (17°),
+   shown once the cover passes ~20°, gone again as the cover settles back. The right half
+   lives on the cover's inside face, which already follows the angle. */
+.half-l{opacity:clamp(0,calc((.955 - cos(var(--open))) * 60),1)}
 .half img{-webkit-user-drag:none;pointer-events:none;position:absolute;width:172%;bottom:24%;mix-blend-mode:multiply}
 .half-l img{left:14%}.half-r img{left:-86%}
 .spread-title{position:absolute;right:11%;top:9%;writing-mode:vertical-rl;font-family:var(--display);font-weight:900;font-size:calc(var(--bw) * .1);letter-spacing:.14em;color:var(--ink)}
@@ -104,12 +113,14 @@ a{color:inherit}
 
 /* entering — open the cover along its binding, then dive into the drawn spread */
 .is-entering .masthead,.is-entering .caption,.is-entering .pager{opacity:0;pointer-events:none}
-.is-entering .slot:not(.is-open){opacity:0!important;transition:opacity .6s}
-.is-returning .slot{transition:--open 1.2s var(--ease),--tilt .5s cubic-bezier(.16,1,.3,1),scale 1.5s cubic-bezier(.75,0,.3,1),opacity .8s}
-.slot.is-open{--open:180deg;--tilt:0deg!important;transition:--open 1.2s var(--ease),--tilt 1.05s var(--ease),scale 1.5s cubic-bezier(.75,0,.3,1)}
+/* Other books step aside while one is open, and come back the same way. Opacity only
+   transitions during these two phases, so dragging the shelf stays immediate. */
+.is-entering .slot:not(.is-open):not(.is-shutting),.is-returning .slot:not(.is-open):not(.is-shutting){transition:--open var(--t-open) var(--ease),--tilt .5s cubic-bezier(.16,1,.3,1),opacity .6s}
+.is-entering .slot:not(.is-open):not(.is-shutting){opacity:0!important}
+.slot.is-open{--open:180deg;--tilt:0deg!important}
 .slot.is-open .book{translate:calc(var(--bw) / -2) 0}
 .slot.is-open .book-shadow{opacity:0}
-.slot.is-diving{scale:3.3;transform-origin:50% 64%;opacity:0!important;transition:--open 1.2s var(--ease),--tilt 1.05s var(--ease),scale 1.5s cubic-bezier(.75,0,.3,1),opacity .9s .55s}
+.slot.is-diving{scale:3.3;transform-origin:50% 64%;opacity:0!important}
 .slot.return-ready,.slot.return-ready *{transition:none!important}
 
 /* ───────── catalog ───────── */

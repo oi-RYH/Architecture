@@ -12,3 +12,6 @@ originals/**/*.FBX
 # impeccable review captures
 .impeccable/review/
 .impeccable/questions/
+
+# Cloudflare wrangler local cache
+.wrangler/

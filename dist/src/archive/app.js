@@ -6,6 +6,14 @@ const html=document.documentElement,room=$('room'),gallery=$('gallery');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const wait=ms=>new Promise(r=>setTimeout(r,reduced?0:ms));
 const frameTick=()=>new Promise(r=>requestAnimationFrame(r));
+// Book motion timing lives in archive.css (:root --t-*); read it instead of duplicating numbers.
+const readMs=name=>{const v=getComputedStyle(html).getPropertyValue(name).trim();return v.endsWith('ms')?parseFloat(v):parseFloat(v)*1000||0;};
+// Resolve when `prop` finishes transitioning on `el` (fallback: its duration, in case nothing changed).
+const untilTransition=(el,prop,ms)=>reduced?Promise.resolve():new Promise(res=>{
+ let done=false,timer=0;const end=()=>{if(done)return;done=true;el.removeEventListener('transitionend',on);clearTimeout(timer);res();};
+ const on=e=>{if(e.target===el&&e.propertyName===prop)end();};
+ el.addEventListener('transitionend',on);timer=setTimeout(end,ms+150);
+});
 const PANES=6;
 
 /* ───────── 서가 · gallery of bound books ───────── */
@@ -251,9 +259,10 @@ async function enter(id,{instant=false}={}){
   if(travel)await wait(750);
   // Open the cover along its thread binding, then dive into the drawn spread.
   html.classList.add('is-entering');openSlot.classList.add('is-open');
-  await wait(1250);
+  await untilTransition(openSlot,'--open',readMs('--t-open'));
   openSlot.classList.add('is-diving');
-  await wait(700);
+  // The room starts fading in partway through the dive.
+  await wait(Math.round(readMs('--t-dive')*.47));
  }
  if(!stage||stageFor!==entry.id){
   // One building's model lives in GPU memory at a time; switching releases the previous one.
@@ -315,14 +324,19 @@ async function leave(){
  html.classList.add('is-leaving');scrollTo(0,0);
  html.classList.add('is-returning');
  room.classList.remove('is-shown');
+ // Exactly the reverse of opening: rise out of the spread, then close the cover.
  if(openSlot?.classList.contains('is-diving')){
-  openSlot.classList.remove('is-diving');await wait(1500);
-  openSlot.classList.remove('is-open');await wait(1250);
+  openSlot.classList.add('is-shutting');
+  openSlot.classList.remove('is-diving');await untilTransition(openSlot,'scale',readMs('--t-dive'));
+  openSlot.classList.remove('is-open');await untilTransition(openSlot,'--open',readMs('--t-open'));
  }else await wait(650);
  stage?.pause();room.hidden=true;html.classList.remove('room-open');
  room.classList.remove('is-closing','is-illustration','is-revealing','is-stamped','is-drafting','is-single');
  document.querySelectorAll('.modes button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode==='whole')));
- html.classList.remove('is-entering','is-leaving','is-returning');openSlot?.classList.remove('is-open');state='home';
+ openSlot?.classList.remove('is-open','is-shutting');
+ html.classList.remove('is-entering','is-leaving');state='home';
+ // Let the other books fade back in before dropping the return-phase transitions.
+ wait(600).then(()=>{if(state==='home')html.classList.remove('is-returning');});
  $('screens').focus({preventScroll:true,focusVisible:false});
 }
 
