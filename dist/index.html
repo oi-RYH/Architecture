@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@300;500;700;900&display=swap">
-<link rel="stylesheet" href="./archive.css?v=17">
+<link rel="stylesheet" href="./archive.css?v=23">
 <script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script>
 </head>
 <body>
@@ -55,7 +55,7 @@
     </div>
    </div>
   </div>
-  <footer class="page-foot"><span>반닫이</span><span id="credit"></span></footer>
+  <footer class="page-foot"><span>반닫이</span><span class="kogl"><span>이 사이트는 공공누리 제1유형(출처표시)에 따라 국가유산청의 공공저작물(3D 에셋)을 이용하였습니다.</span><span id="credit"></span></span></footer>
  </section>
 </div>
 
@@ -68,7 +68,7 @@
   <p class="drafting-step" id="drafting-step" role="status" aria-live="polite"></p>
   <p class="drafting-meter"><span id="drafting-pct">0</span><small>정밀 모델 준비</small></p>
  </div>
- <div class="nakgwan" id="nakgwan" aria-hidden="true"><span>반닫이</span></div>
+ <div class="nakgwan" id="nakgwan" aria-hidden="true"><span>諾</span></div>
 
  <header class="room-head">
   <button class="close-door" id="close-door" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>책 덮고 나가기</button>
@@ -84,6 +84,7 @@
    <h3 id="detail-name"></h3>
    <div><p>문화유산 설명 · 모델 부재의 식별 결과가 아닙니다.</p><p class="detail-en" id="detail-en"></p><p id="detail-text"></p><p class="detail-tag" id="detail-tag"></p></div>
   </article>
+  <p class="asset-credit" id="asset-credit"></p>
  </aside>
 
  <div class="room-tools">
@@ -94,6 +95,6 @@
  <div class="room-error" id="room-error" hidden><p id="room-error-text"></p><button type="button" id="room-retry">다시 시도</button></div>
 </div>
 
-<script type="module" src="./src/archive/app.js?v=34"></script>
+<script type="module" src="./src/archive/app.js?v=37"></script>
 </body>
 </html>

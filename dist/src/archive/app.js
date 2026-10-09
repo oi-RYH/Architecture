@@ -1,4 +1,4 @@
-import {ARCHIVE,NUMERALS,findEntry} from './registry.js?v=official-1';
+import {ARCHIVE,NUMERALS,findEntry} from './registry.js?v=official-2';
 import {createStage,elevationFrame} from './stage.js?v=29';
 
 const $=id=>document.getElementById(id);
@@ -41,7 +41,7 @@ let ringEls=[],pos=0,target=0,raf=0,last=0,dragging=false,introAt=0,step=300;
 
 function renderGallery(){
  $('track').innerHTML=ring.map(({idx,copy},r)=>{const e=slots[idx];
-  return `<li class="slot${e?'':' is-empty'}" id="ring-${r}" data-ring="${r}" ${copy?'aria-hidden="true"':`role="option" aria-selected="false" aria-label="${e?`${e.name} ${e.hanja} — ${e.site}`:'다음 기록 — 준비 중'}"`}>${bookHTML(e)}<span class="book-shadow" aria-hidden="true"></span></li>`;}).join('');
+  return `<li class="slot${e?'':' is-empty'}" id="ring-${r}" data-ring="${r}" ${copy?'aria-hidden="true"':`role="option" aria-selected="false" aria-label="${e?`${e.name} ${e.hanja} — ${e.site}`:'다음 기록 — 준비 중'}"`}><span class="book-shadow" aria-hidden="true"></span>${bookHTML(e)}</li>`;}).join('');
  ringEls=[...document.querySelectorAll('#track .slot')];
  measure();
 }
@@ -71,7 +71,7 @@ function tick(now){
  else last=0;
 }
 function kick(){if(!raf)raf=requestAnimationFrame(tick);}
-function goTo(t){target=t;kick();}
+function goTo(t){target=t;if(litBook)lightBook(null);kick();}
 function goToRecord(i,{instant=false}={}){
  // Travel the short way round the ring to the nearest copy of record i.
  let best=0,bd=Infinity;for(let r=0;r<L;r++)if(ring[r].idx===i){const d=wrapD(r-pos);if(Math.abs(d)<Math.abs(bd)){bd=d;best=r;}}
@@ -89,8 +89,29 @@ function paintCaption(){
  const pi=$('pager-index');pi.classList.toggle('is-next',!e);
  pi.innerHTML=e?`<b>第${NUMERALS[active]}卷</b><span>/</span>전 ${ARCHIVE.length}권`:'다음 기록';
 }
+// Pointer light: the active book leans toward the mouse and its cover catches the light.
+const canHover=matchMedia('(hover: hover) and (pointer: fine)').matches&&!reduced;
+let litBook=null;
+function lightBook(book,x=0,y=0,on=0){
+ if(litBook&&litBook!==book){litBook.style.setProperty('--hx',0);litBook.style.setProperty('--hy',0);litBook.style.setProperty('--sheen',0);}
+ litBook=book;if(!book)return;
+ book.style.setProperty('--hx',x.toFixed(3));book.style.setProperty('--hy',y.toFixed(3));book.style.setProperty('--sheen',on);
+}
+function bindBookLight(sc){
+ if(!canHover)return;
+ sc.addEventListener('pointermove',e=>{
+  if(e.pointerType!=='mouse'||e.buttons||dragging||state!=='home'){lightBook(null);return;}
+  const book=activeEl()?.querySelector('.book');if(!book)return;
+  const r=book.getBoundingClientRect(),pad=24;
+  if(e.clientX<r.left-pad||e.clientX>r.right+pad||e.clientY<r.top-pad||e.clientY>r.bottom+pad){lightBook(book);return;}
+  const cl=v=>Math.max(-1,Math.min(1,v));
+  lightBook(book,cl(((e.clientX-r.left)/r.width-.5)*2),cl(((e.clientY-r.top)/r.height-.5)*2),1);
+ });
+ sc.addEventListener('pointerleave',()=>litBook&&lightBook(litBook));
+}
 function bindGallery(){
  const sc=$('screens'),idle=()=>state==='home';
+ bindBookLight(sc);
  let start=null,moved=false,samples=[];
  $('prev').addEventListener('click',()=>idle()&&goTo(Math.round(target)-1));
  $('next').addEventListener('click',()=>idle()&&goTo(Math.round(target)+1));
@@ -149,7 +170,7 @@ function renderLedger(){
    <button type="button" class="enter" data-enter="${e.id}"><span class="enter-seal" aria-hidden="true">入</span><span>책을 펼쳐 들어가기</span></button>
   </div></li>`).join('');
  $('ledger').innerHTML=rows+`<li class="record is-next"><span class="rec-no">第${NUMERALS[ARCHIVE.length]}卷</span><p>다음 책을 엮고 있습니다.</p></li>`;
- $('credit').innerHTML=ARCHIVE.map(e=>`<a href="${e.credit.href}" target="_blank" rel="noopener">${e.credit.text}</a>`).join(' · ');
+ $('credit').innerHTML=ARCHIVE.map(e=>`<a href="${e.credit.href}" target="_blank" rel="noopener">${e.credit.text}</a>`).join('');
 }
 
 /* ───────── 방 · room ───────── */
@@ -166,6 +187,8 @@ function buildRoom(entry){
  room.style.setProperty('--plates',`url('${entry.assets}')`);
  $('plaque').innerHTML=`<span class="plaque-board" aria-label="${entry.name}">${[...entry.hanja].map(c=>`<span>${c}</span>`).join('')}</span>`;
  $('room-meta').innerHTML=`<b>${entry.name}</b> ${entry.role} · ${entry.era} · ${entry.designation}`;
+ // The 3D source travels with the model into the room, not only in the page footer.
+ $('asset-credit').innerHTML=`<span>3D 원천자료</span><a href="${entry.credit.href}" target="_blank" rel="noopener">${entry.credit.text}</a>`;
  $('drafting-title').innerHTML=`<span>${entry.hanja}</span><small>${entry.name} 밑그림</small>`;
  $('elevation').innerHTML=entry.drawOrder.map((id,k)=>`<img class="plate" data-k="${k}" src="${entry.assets}plate-${id}.webp" alt="" decoding="async">`).join('');
  $('layer-list').innerHTML=entry.layers.map((l,i)=>`<li><button type="button" data-layer="${l.id}" aria-pressed="false" style="--tone:${l.tone}"><span class="seal">${NUMERALS[i]}</span><span class="nm">${l.name}</span><span class="en">${l.english}</span></button></li>`).join('');
@@ -258,6 +281,7 @@ async function enter(id,{instant=false}={}){
   if(scrollY>4){scrollTo({top:0,behavior:'smooth'});for(let i=0;i<60&&scrollY>2;i++)await wait(16);}
   if(travel)await wait(750);
   // Open the cover along its thread binding, then dive into the drawn spread.
+  if(litBook)lightBook(litBook);
   html.classList.add('is-entering');openSlot.classList.add('is-open');
   await untilTransition(openSlot,'--open',readMs('--t-open'));
   openSlot.classList.add('is-diving');

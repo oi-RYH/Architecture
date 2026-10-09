@@ -23,6 +23,10 @@ a{color:inherit}
 /* ───────── 서가 · gallery of bound books ───────── */
 @property --open{syntax:'<angle>';inherits:true;initial-value:0deg}
 @property --tilt{syntax:'<angle>';inherits:true;initial-value:22deg}
+/* Pointer light on the active book: position (-1..1) and strength (0..1). */
+@property --hx{syntax:'<number>';inherits:true;initial-value:0}
+@property --hy{syntax:'<number>';inherits:true;initial-value:0}
+@property --sheen{syntax:'<number>';inherits:true;initial-value:0}
 .gallery{position:relative;height:100svh;min-height:600px;overflow:clip;background:var(--hanji);
  --bh:min(46svh,430px,62vw);--bw:calc(var(--bh) * .7);--bt:calc(var(--bh) * .055);--gap:clamp(30px,4.4vw,80px);--edge:clamp(20px,3.6vw,56px);
  --ease:cubic-bezier(.65,0,.2,1)}
@@ -45,7 +49,15 @@ a{color:inherit}
 .slot.is-open,.slot.is-shutting{transition:--open var(--t-open) var(--ease),--tilt var(--t-tilt) var(--ease),scale var(--t-dive) cubic-bezier(.75,0,.3,1),opacity var(--t-fade) ease var(--d-fade)}
 .slot.is-active:hover:not(.is-open){--open:17deg}
 
-.book{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateY(var(--tilt));transition:translate var(--t-open) var(--ease)}
+.book{position:absolute;inset:0;transform-style:preserve-3d;
+ /* The shelf tilt plus a small lean toward the pointer (only set on the active book). */
+ transform:rotateX(calc(var(--hy) * -7deg)) rotateY(calc(var(--tilt) + var(--hx) * 10deg));
+ transition:translate var(--t-open) var(--ease),--hx .45s cubic-bezier(.2,.8,.2,1),--hy .45s cubic-bezier(.2,.8,.2,1),--sheen .5s ease}
+/* Light on the cover: a warm wash at the pointer, and a glint caught only by the raised 능화문 facets. */
+.cover-front::before,.cover-front::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:calc(var(--sheen) * .3)}
+.cover-front::before{background:radial-gradient(55% 45% at calc(50% + var(--hx) * 46%) calc(50% + var(--hy) * 46%),#fff4d6b3,#fff4d600 72%);mix-blend-mode:soft-light}
+.cover-front::after{background:radial-gradient(38% 30% at calc(50% + var(--hx) * 46%) calc(50% + var(--hy) * 46%),#fff6e0,#fff6e000 70%);
+ -webkit-mask:url('./assets/neunghwa-glint.webp') 0 0/40px;mask:url('./assets/neunghwa-glint.webp') 0 0/40px;mix-blend-mode:overlay}
 .book>span{position:absolute}
 .b-back{inset:0;transform:translateZ(calc(var(--bt) / -2));background:#8f7543;box-shadow:0 30px 50px -30px #2a1d1080}
 .b-edge{top:1.5%;bottom:1.5%;left:calc(var(--bt) / -2);width:var(--bt);transform:rotateY(-90deg);
@@ -84,7 +96,8 @@ a{color:inherit}
 .half-l img{left:14%}.half-r img{left:-86%}
 .spread-title{position:absolute;right:11%;top:9%;writing-mode:vertical-rl;font-family:var(--display);font-weight:900;font-size:calc(var(--bw) * .1);letter-spacing:.14em;color:var(--ink)}
 .spread-seal{position:absolute;right:13%;top:calc(9% + var(--bw) * .36);width:calc(var(--bw) * .06);aspect-ratio:1;display:grid;place-items:center;background:var(--juhong);color:#f6e9d6;font-family:var(--display);font-weight:900;font-size:calc(var(--bw) * .016);writing-mode:vertical-rl;line-height:1;mix-blend-mode:multiply}
-.book-shadow{position:absolute;left:-4%;right:-2%;bottom:-9px;height:16px;background:radial-gradient(closest-side,#2a1d1055,transparent);pointer-events:none;transition:opacity .8s}
+/* Pushed well behind the book in depth, so a pointer lean never tips the cover behind its own shadow. */
+.book-shadow{position:absolute;left:-4%;right:-2%;bottom:-9px;height:16px;transform:translateZ(-90px) scale(1.06);background:radial-gradient(closest-side,#2a1d1055,transparent);pointer-events:none;transition:opacity .8s}
 .book-shadow::before{content:"";position:absolute;left:4%;right:6%;top:6px;height:4px;border-radius:50%;background:#2a1d1038;filter:blur(1.5px)}
 
 .caption{position:absolute;z-index:2;left:var(--edge);bottom:clamp(22px,4.6svh,52px);max-width:min(560px,58vw);transition:opacity .5s}
@@ -158,6 +171,12 @@ a{color:inherit}
 .colophon .links a:hover{color:var(--juhong)}
 .page-foot{position:relative;max-width:1180px;margin:0 auto;padding:22px clamp(18px,4vw,48px) 34px;display:flex;justify-content:space-between;gap:20px;font-size:11.5px;letter-spacing:.06em;color:var(--ink-3);border-top:1px solid #1d1a1622}
 .page-foot a{text-decoration:none}.page-foot a:hover{text-decoration:underline}
+.kogl{display:flex;flex-direction:column;gap:4px;text-align:right}
+#credit{display:flex;flex-direction:column;gap:2px}
+.asset-credit{margin:18px 0 0;padding-top:12px;border-top:1px dotted #1d1a1640;font-size:11.5px;line-height:1.6;color:var(--ink-3)}
+.asset-credit span{display:block;font-size:10px;letter-spacing:.24em;margin-bottom:2px}
+.asset-credit a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid #1d1a1630}
+.asset-credit a:hover{color:var(--juhong)}
 
 /* ───────── room ───────── */
 .room{position:fixed;inset:0;z-index:40;color:var(--ink);background:var(--hanji);opacity:0;transition:opacity .9s ease;overflow:hidden}
@@ -192,9 +211,10 @@ a{color:inherit}
 .drafting-meter{position:absolute;left:0;right:0;bottom:clamp(34px,6svh,64px);margin:0;display:flex;justify-content:center;align-items:baseline;gap:10px;color:var(--ink-3);font-size:12px;letter-spacing:.2em}
 .drafting-meter span{font-variant-numeric:tabular-nums;font-size:13px;color:var(--ink-2)}
 .drafting-meter span::after{content:"%"}
-.nakgwan{position:absolute;left:var(--seal-x,80%);top:var(--seal-y,60%);width:clamp(42px,4.2vw,62px);aspect-ratio:1;display:grid;place-items:center;
- background:var(--juhong);color:#f6e9d6;font-family:var(--display);font-weight:900;font-size:clamp(10px,1.1vw,16px);
- box-shadow:inset 0 0 0 3px var(--juhong),inset 0 0 0 5px #f6e9d6aa;
+.nakgwan{--s:clamp(63px,6.3vw,93px);position:absolute;left:var(--seal-x,80%);top:var(--seal-y,60%);width:var(--s);aspect-ratio:1;display:grid;place-items:center;
+ /* 諾 — consent: the seal grants entry once the drawing is complete. One glyph fills the seal. */
+ background:var(--juhong);color:#f6e9d6;font-family:var(--display);font-weight:900;font-size:calc(var(--s) * .76);
+ box-shadow:inset 0 0 0 calc(var(--s) * .05) var(--juhong),inset 0 0 0 calc(var(--s) * .075) #f6e9d6aa;
  mix-blend-mode:multiply;opacity:0;transform:translate(-50%,-50%) scale(1.8) rotate(-8deg);pointer-events:none;
  -webkit-mask-image:radial-gradient(circle at 30% 30%,#000 60%,#000c 75%,#0008 100%);mask-image:radial-gradient(circle at 30% 30%,#000 60%,#000c 75%,#0008 100%)}
 .nakgwan>span{writing-mode:vertical-rl;text-orientation:upright;line-height:1;letter-spacing:0}
@@ -277,6 +297,7 @@ a{color:inherit}
  .rec-body dl{grid-template-columns:1fr}
  .colophon{grid-template-columns:1fr;gap:28px}
  .page-foot{flex-direction:column}
+ .kogl{text-align:left}
  .drafting-title{left:0;right:0;top:12svh;transform:none;writing-mode:horizontal-tb;flex-direction:column;align-items:center;gap:8px}
  .drafting-title span{font-size:48px}
  .room-head{gap:12px;flex-wrap:wrap}

@@ -42,8 +42,8 @@ export const ARCHIVE=[{
  layers:GYEONGHOERU_LAYERS.map(l=>({...l,tone:TONES[l.id],step:''})),
  drawOrder:DRAW_ORDER,
  credit:{
-  text:'국가유산청 국가유산 디지털 콘텐츠 원천자원 · 경복궁 경회루',
-  href:'https://digital.khs.go.kr/'
+  text:'국가유산청 국가유산산업육성팀, 2024 국가유산 3D 에셋 · 경복궁 경회루 · 공공누리 제1유형',
+  href:'https://digital.khs.go.kr/heritage/catalogDetail.do?order=1&index=1&id=13984207324387057553&type=1'
  }
 }];
 
