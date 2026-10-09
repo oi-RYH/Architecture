@@ -1,6 +1,8 @@
-# Architecture 이어서 작업하기
+# 반닫이 이어서 작업하기
 
 ## 현재 프로젝트
+
+- 서비스 이름: **반닫이**. 페이지 제목·로고·낙관은 이 이름을 사용합니다. 임의의 한자 표기는 붙이지 않습니다.
 
 - 실제 로컬 저장소: `/Users/baejeonghun/Documents/10-19_Coding/11_Personal-Projects/11.10_Architecture`
 - 원격: https://github.com/oi-RYH/Architecture

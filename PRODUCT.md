@@ -10,7 +10,7 @@ web
 Primary: people viewing this as the author's portfolio piece — reviewers, peers and visitors who judge it on first impression and craft. Secondary: anyone curious about Korean traditional architecture who wants to explore a real building's structure.
 
 ## Product Purpose
-결 is an archive of Korean traditional buildings. Each building gets its own record that can be explored in 3D and taken apart layer by layer (기단·월대, 목조가구, 공포부, 처마부, 지붕부, 수장·창호, 어좌·기타 장식). Success: a visitor understands within seconds that this is a curated archive of buildings, enters one, and leaves remembering how the building came apart.
+반닫이 is an archive of Korean traditional buildings. Each building gets its own record that can be explored in 3D and taken apart layer by layer (기단·월대, 목조가구, 공포부, 처마부, 지붕부, 수장·창호, 어좌·기타 장식). Success: a visitor understands within seconds that this is a curated archive of buildings, enters one, and leaves remembering how the building came apart.
 
 ## Positioning
 The models are official heritage assets (국가유산청 2023 digital source data), not hand-made approximations, and every record is split into explanatory layers that can be exploded and isolated. The ink elevation drawings ("밑그림") are rendered from the same model, so drawing and 3D are one object.
@@ -26,7 +26,7 @@ Static site served from `dist/` (no build step), Three.js r180, deployed to an e
 - Removed by user: the left "펼침" gauge in the building room.
 
 ## Brand Commitments
-Name 결 (結). Must carry Korean traditional beauty. User asked for restraint and empty space (여백과 절제) combined with strong, memorable motion. Rejected: a literal, clip-art hanok facade (eaves/lattice doors drawn in SVG) that did not read as an archive.
+Name 반닫이. Must carry Korean traditional beauty. User asked for restraint and empty space (여백과 절제) combined with strong, memorable motion. Rejected: a literal, clip-art hanok facade (eaves/lattice doors drawn in SVG) that did not read as an archive.
 
 ## Evidence on Hand
 - `dist/models/` official Geunjeongjeon glTF + provenance.json.

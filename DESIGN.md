@@ -1,5 +1,5 @@
 ---
-name: 결 (結)
+name: 반닫이
 description: An archive of Korean traditional buildings kept as a shelf of Joseon thread-bound books on hanji; opening a book is entering the building.
 colors:
   juhong-seal: "#b8432b"
@@ -152,7 +152,9 @@ components:
     padding: "0.42em 0.7em"
 ---
 
-# Design System: 결 (結)
+# Design System: 반닫이
+
+Brand update (2026-10-10): use 반닫이 without a Hanja substitute. Keep the masthead wordmark on one line. The room seal sets the three Hangul syllables vertically at clamp(10px, 1.1vw, 16px); the miniature spread seal uses 1.6% of book width, vertically, to fit its existing square. These are decorative brand marks, not reading-copy sizes.
 
 ## Overview
 
@@ -177,7 +179,7 @@ Motion is the memory. Covers do not slide; they hinge, driven by registered angl
 Paper, ink and a few mineral pigments; the palette reads like a page from a bound book under daylight.
 
 ### Primary
-- **Juhong Seal Vermilion** (juhong-seal): the seal colour. Fills the 入 enter seal, the 落款 stamp in the room, the tiny 結 seal on the open spread, active layer seals, and the focus ring. Also answers hover on ink underlines (masthead link, enter label, colophon links). Never a background, never a panel fill.
+- **Juhong Seal Vermilion** (juhong-seal): the seal colour. Fills the 入 enter seal, the 落款 stamp in the room, the tiny 반닫이 seal on the open spread, active layer seals, and the focus ring. Also answers hover on ink underlines (masthead link, enter label, colophon links). Never a background, never a panel fill.
 - **Seal Paper** (seal-paper): the carved-out character colour inside vermilion seals, and the inner keyline that makes a seal read as stamped rather than a button.
 
 ### Secondary
@@ -266,7 +268,7 @@ Tactile and ceremonial: a 42px vermilion square with a seal-paper keyline carved
 Two 46px circular buttons (38px on mobile) with 1px ink rings at 25% and 1.4px stroked chevrons, around a centred volume count (第一卷 / 전 1권). Hover firms the ring to full ink and adds a 4% ink wash; the disabled end drops to 30% opacity.
 
 ### Book (shelf item)
-A CSS-built 선장본: back board, ribbed fore-edge and top edge, hanji page, and a cover hinged on its right edge. The cover carries the title slip (left 9%, 23% wide, 54% tall, seal-paper keyline) and the five-hole thread on the right 11%. The blank next book has a slip with no text and a greyed cover. The inside cover and page each hold half of the model-rendered ink elevation, multiplied into the paper, so the spread reads as one drawing across the gutter; the hanja title and a tiny 結 seal sit at the right.
+A CSS-built 선장본: back board, ribbed fore-edge and top edge, hanji page, and a cover hinged on its right edge. The cover carries the title slip (left 9%, 23% wide, 54% tall, seal-paper keyline) and the five-hole thread on the right 11%. The blank next book has a slip with no text and a greyed cover. The inside cover and page each hold half of the model-rendered ink elevation, multiplied into the paper, so the spread reads as one drawing across the gutter; the hanja title and a tiny 반닫이 seal sit at the right.
 
 ### Room Panel (일곱 켜)
 Translucent mounted hanji on the right. Heading plus a two-state mode toggle (온채 / 홑겹: 1.5px ink frame, active segment filled ink). Seven layer rows separated by dotted ink rules, each a 26px outlined vermilion seal with a hanja numeral, the Korean layer name, and a small English gloss; the active row fills its seal and pops a diamond in its dancheong tone. Below, a 2px ink rule opens the detail: vertical heading with a filled seal, gloss, body, and a diamond-marked tag. Details rise in (8px, 0.55s) when they change.

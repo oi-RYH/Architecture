@@ -21,7 +21,7 @@ function bookHTML(e){
  return `<span class="book">
   <span class="b-back"></span><span class="b-edge"></span><span class="b-top"></span>
   <span class="b-page">${half('l')}</span>
-  <span class="b-cover"><span class="cover-front">${slip}${thread}</span><span class="cover-inside">${half('r')}${e?`<span class="spread-title">${e.hanja}</span><span class="spread-seal">結</span>`:''}</span></span>
+  <span class="b-cover"><span class="cover-front">${slip}${thread}</span><span class="cover-inside">${half('r')}${e?`<span class="spread-title">${e.hanja}</span><span class="spread-seal">반닫이</span>`:''}</span></span>
  </span>`;
 }
 // The shelf is a ring: the blank book is followed by the first record again.
@@ -263,7 +263,7 @@ async function enter(id,{instant=false}={}){
   stage=createStage($('stage'),entry,{reduced,
    onSelect:id=>paintSelected(id),
    onLost:()=>fail('3D 화면 연결이 끊겼습니다. 다시 시도해 주세요.')});
-  if(/[?&]debug\b/.test(location.search))globalThis.__gyeolStage=stage;
+  if(/[?&]debug\b/.test(location.search))globalThis.__bandajiStage=stage;
   paintSelected(stage.selected);
   // Loading continues even if the visitor steps back out mid-drawing.
   stageLoad=stage.load(drawing.report).then(()=>drawing.complete());

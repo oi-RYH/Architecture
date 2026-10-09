@@ -1,5 +1,14 @@
 # AI Work Log — Architecture
 
+## 2026-10-10 — 서비스 이름 반닫이로 변경
+
+- 사용자 요청: 임시 브랜드명을 반닫이로 전면 교체.
+- 변경: 페이지 title/description, 상단 로고, footer, 책 펼침면 도장, 전환 낙관, SVG favicon, package 이름(bandaji), 디버그 식별자(__bandajiStage), README/PRODUCT/DESIGN/CONTINUE_HERE 및 디자인 메타데이터의 브랜드 표기.
+- Impeccable의 기존 디자인 보존 원칙 적용. 한 글자 도장을 세 글자 세로쓰기와 축소 글자 크기로 조정. 건축 용어, 건물 한자, 모델, 역사적 작업 로그 및 원격 저장소·배포 식별자는 변경하지 않음. 기존 미추적 .wrangler/ 보존.
+- 검사: npm run check, git diff --check 통과. rg로 현재 코드/브랜드 문서의 옛 브랜드 및 식별자 잔존 여부 확인. Impeccable detect 실행: 기존 스타일 경고·권고 존재, 이름 변경 범위 밖의 디자인 개편은 수행하지 않음.
+- 로컬 서버를 127.0.0.1:4173에서 실행해 브라우저 제목·로고·DOM 표기 확인. 390px/1440px viewport 화면 관찰 후 override 해제. 모델 진입 애니메이션 전체 재검수는 수행하지 않음.
+- 새 기술 또는 지식 상태 변경 없음. 이번 변경은 커밋·push·배포하지 않음.
+
 ## 2026-10-09 — 현재 기록관만 남기고 로컬 커밋
 
 - 사용자 요청: 현재 웹만 남겨 Git에 커밋하고 로컬 작업 위치 안내.
